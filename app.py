@@ -2,7 +2,7 @@ import streamlit as st
 
 st.set_page_config(page_title="Susun Kata Jepang - Bab 9", layout="centered")
 
-# --- DATABASE SOAL LOKAL (BAB 9 - 17 SOAL BARU) ---
+# --- DATABASE SOAL LOKAL (BAB 9 - 17 SOAL) ---
 if "database_soal" not in st.session_state:
     st.session_state.database_soal = [
         # === BAGIAN 1 ===
@@ -13,7 +13,7 @@ if "database_soal" not in st.session_state:
             "hiragana": "だれか に じぶん の なやみ を きいて もらいたい と おもう こと が あります 。",
             "arti": "Kadang saya berpikir ingin seseorang mendengarkan keluh kesah saya.",
             "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "ことが", "あります", "。"],
-            "soal": ["おもう", "悩み", "と", "聞いて", "が", "だれか", "もらいたい", "あります", "じぶん", "に", "たい", "ほしい", "こと", "の"]
+            "soal": ["お思う", "悩み", "と", "聞いて", "が", "だれか", "もらいたい", "あります", "じぶん", "に", "たい", "ほしい", "こと", "の"]
         },
         {
             "id": 2,
@@ -21,7 +21,7 @@ if "database_soal" not in st.session_state:
             "kanji": "この書類、ちょっと見ていただきたいんですが。",
             "hiragana": "この しょるい 、 ちょっと みて いただきたい ん です が 。",
             "arti": "Dokumen ini, saya ingin Anda tolong lihat sebentar...",
-            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "maxですが", "。"],
+            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "ですが", "。"],
             "soal": ["ちょっと", "が", "見て", "書類", "この", "です", "いただき", "たい", "ん"]
         },
         {
@@ -76,13 +76,13 @@ if "database_soal" not in st.session_state:
             "kanji": "今日は入管へ行かなければならないので、早く帰らせていただきたいのですが……。",
             "hiragana": "きょう は にゅうかん へ いかなければ ならない ので 、 はやく かえらせて いただきたい の です が …… 。",
             "arti": "Karena hari ini saya harus pergi ke imigrasi, saya ingin meminta izin untuk pulang cepat...",
-            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "ですが", "……", "。"],
-            "soal": ["帰ら", "なければ", "いただき", "今日", "は", "入管", "へ", "行か", "なら", "ない", "ので", "早く", "せて", "たい", "の", "ですが", "……"]
+            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "maxsですが", "。"],
+            "soal": ["帰ら", "なければ", "いただき", "今日", "は", "入管", "へ", "行か", "なら", "ない", "ので", "早く", "せて", "たい", "の", "maxsですが", "……"]
         },
         {
             "id": 9,
             "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
-            "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせないでもらいたいよ。",
+            "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせない geography もらいたいよ。",
             "hiragana": "それ は さっき も せつめい した こと だ よ 。 なんど も おなじ こと を いわさせないde もらいたい よ 。",
             "arti": "Itu kan hal yang sudah saya jelaskan tadi. Tolong jangan buat saya mengatakan hal yang sama berulang kali.",
             "kunci": ["それ", "は", "さっき", "も", "説明", "した", "こと", "だよ", "。", "何度も", "同じ", "こと", "を", "言わさせないで", "もらいたい", "よ", "。"],
@@ -182,7 +182,7 @@ soal_sekarang = st.session_state.database_soal[st.session_state.index_soal]
 if not st.session_state.bank_kata and not st.session_state.jawaban_user:
     st.session_state.bank_kata = [{"id": i, "teks": kata, "dipakai": False} for i, kata in enumerate(soal_sekarang["soal"])]
 
-# --- STYLING CSS PERSIS SEPERTI GAMBAR (Pills Berbentuk Lingkaran Merah/Abu-abu) ---
+# --- STYLING CSS PERSIS SEPERTI GAMBAR ---
 st.markdown("""
 <style>
     div[data-testid="stStatusWidget"] + div div[data-testid="stWidgetLabel"] {
@@ -194,7 +194,6 @@ st.markdown("""
         flex-wrap: wrap !important;
         gap: 6px !important;
     }
-    /* Tombol Pilihan Kata di Atas */
     .stButton > button {
         border-radius: 14px !important;
         font-weight: bold !important;
@@ -203,7 +202,6 @@ st.markdown("""
         background-color: #ffffff !important;
         color: #333333 !important;
     }
-    /* Kotak Informasi Atas */
     .info-box {
         background-color: #f8f9fa;
         padding: 15px;
@@ -228,7 +226,6 @@ st.markdown("""
         border: 1px solid #cccccc !important;
         color: #333333 !important;
     }
-    /* Ketika Pills Aktif Terpilih (Sesuai Gambar Bulatan Merah Merona) */
     div[data-testid="stPills"] button[aria-pressed="true"] {
         background-color: #ffeef0 !important;
         border: 2px solid #ff4b4b !important;
@@ -350,16 +347,14 @@ with col3:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- 🎯 FITUR LOMPAT INSTAN KE NOMOR SOAL (PERSIS SEPERTI GAMBAR 1000991486.jpg) ---
+# --- 🎯 FITUR LOMPAT INSTAN KE NOMOR SOAL (VERSI AMAN TANPA PARAMETER INDEX) ---
 st.markdown("<div style='text-align: center; font-weight: bold; font-size: 1.05rem;'>🎯 Lompat Instan ke Nomor Soal:</div>", unsafe_allow_html=True)
 
-# Generate list string angka ["1", "2", "3", ..., "17"]
 opsi_pills_navigasi = [str(i+1) for i in range(len(st.session_state.database_soal))]
 
 navigasi_klik = st.pills(
     label="Navigasi Instan Nomor Soal",
     options=opsi_pills_navigasi,
-    index=st.session_state.index_soal,
     selection_mode="single",
     label_visibility="collapsed",
     key="pills_navigasi_instan"
@@ -382,9 +377,6 @@ if st.session_state.status_periksa:
     
     user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
     kunci_joined = "".join(soal_sekarang["kunci"]).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
-
-    user_joined = user_joined.replace("帰らせetいただき", "帰らせていただき")
-    kunci_joined = kunci_joined.replace("帰らせetいただき", "帰らせていただき")
 
     if user_joined == kunci_joined:
         st.success(f"🎉 **正解 (Benar)!** Susunan bunpou kamu sudah sempurna!\n\n"
