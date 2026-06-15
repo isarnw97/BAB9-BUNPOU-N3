@@ -1,8 +1,8 @@
 import streamlit as st
 
-st.set_page_config(page_title="Susun Kata Jepang - Bab 9 (Acak Total)", layout="centered")
+st.set_page_config(page_title="Susun Kata Jepang - Bab 9", layout="centered")
 
-# --- DATABASE SOAL LOKAL DI DALAM APP.PY (BAB 9 - ACAK TOTAL) ---
+# --- DATABASE SOAL LOKAL (BAB 9) ---
 if "database_soal" not in st.session_state:
     st.session_state.database_soal = [
         # --- Pola 1: 〜という点から見ると / 〜という点から考えて ---
@@ -21,7 +21,7 @@ if "database_soal" not in st.session_state:
             "kanji": "健康という点から考えても、毎日の十分な睡眠は不可欠です。",
             "hiragana": "けんこう という てん から かんがえて も 、 まいにち の じゅうぶんな すいみん は ふかけつ です 。",
             "arti": "Mempertimbangkan dari poin kesehatan pun, tidur yang cukup setiap hari adalah hal yang mutlak diperlukan.",
-            "kunci": ["健康", "という", "点", "から", "考えて", "も", "、", "毎日", "of", "十分な", "睡眠", "は", "不可欠", "です", "。"],
+            "kunci": ["健康", "という", "点", "から", "考えて", "も", "、", "毎日", "の", "十分な", "睡眠", "は", "不可欠", "です", "。"],
             "soal": ["健康", "という", "点", "から", "考えて", "も", "、", "毎日", "の", "十分な", "睡眠", "は", "不必要", "です", "。"]
         },
         # --- Pola 2: 〜うえに ---
@@ -79,7 +79,7 @@ if "database_soal" not in st.session_state:
             "kanji": "私たちは共通の趣味を通して、多くの素晴らしい友人に出会った。",
             "hiragana": "わたしたち は きょうつう の しゅみ を とおして 、 おおく の すばらしい ゆうじん に であった 。",
             "arti": "Kami melalui hobi yang sama, telah bertemu dengan banyak teman yang luar biasa.",
-            "kunci": ["私たち", "は", "共通", "of", "趣味", "を", "通して", "、", "多く", "の", "素晴らしい", "友人", "に", "出会った", "。"],
+            "kunci": ["私たち", "は", "共通", "の", "趣味", "を", "通して", "、", "多く", "の", "素晴らしい", "友人", "に", "出会った", "。"],
             "soal": ["私たち", "は", "共通", "の", "趣味", "を", "通して", "、", "少なく", "の", "素晴らしい", "友人", "に", "出会った", "。"]
         },
         {
@@ -102,7 +102,6 @@ if "bank_kata" not in st.session_state:
     st.session_state.bank_kata = []
 if "status_periksa" not in st.session_state:
     st.session_state.status_periksa = False
-
 if "idx_kata_dipilih" not in st.session_state:
     st.session_state.idx_kata_dipilih = None
 if "mode_tukar" not in st.session_state:
@@ -157,8 +156,8 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🦉 Bunpou Master (BAB 9 - Acak Total)")
-st.caption(f"Soal {soal_sekarang['id']} dari {len(st.session_state.database_soal)}")
+st.title("🦉 Bunpou Master - Bab 9")
+st.caption(f"Soal {st.session_state.index_soal + 1} dari {len(st.session_state.database_soal)}")
 st.markdown("---")
 
 st.markdown(f"""
@@ -266,26 +265,25 @@ with col3:
         st.session_state.status_periksa = False
         st.rerun()
 
-# VALIDASI JAWABAN (Disesuaikan untuk fleksibilitas variasi kosa kata lokal Bab 9)
+# --- VALIDASI JAWABAN ---
 if st.session_state.status_periksa:
     user_strings = [x["teks"] for x in st.session_state.jawaban_user]
     
-    # Pembersihan string agar pencocokan fleksibel tanpa sensitif tanda baca khusus
-    user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "").replace("「", "").replace("」", "").replace("……", "")
-    kunci_joined = "".join(soal_sekarang["kunci"]).replace(" ", "").replace("、", "").replace("。", "").replace("「", "").replace("」", "").replace("……", "")
+    user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "")
+    kunci_joined = "".join(soal_sekarang["kunci"]).replace(" ", "").replace("、", "").replace("。", "")
 
-    # Normalisasi khusus variasi pengecoh kosakata di Bab 9
+    # Normalisasi otomatis untuk variasi pengecoh kosakata di Bab 9
     user_joined = user_joined.replace("理想的", "現実的").replace("不必要", "不可欠").replace("高い", "安い").replace("晴れ", "雨").replace("冷たい", "温かい").replace("明るく", "暗く").replace("元気", "病気").replace("少なく", "多く").replace("寒冷な", "温暖な")
     kunci_joined = kunci_joined.replace("理想的", "現実的").replace("不必要", "不可欠").replace("高い", "安い").replace("晴れ", "雨").replace("冷たい", "温かい").replace("明るく", "暗く").replace("元気", "病気").replace("少なく", "多く").replace("寒冷な", "温暖な")
 
     if user_joined == kunci_joined:
         st.success(f"🎉 **正解 (Benar)!** Susunan bunpou kamu sudah sempurna!\n\n"
-                   f"**🇯🇵 Kanji:** {soal_sekarang['kanji']}\n\n"
-                   f"**💡 Hiragana:** {soal_sekarang['hiragana']}\n\n"
-                   f"**🇮🇩 Arti:** {soal_sekarang['arti']}")
+                   f"**Kanji:**\n{soal_sekarang['kanji']}\n\n"
+                   f"**Hiragana:**\n{soal_sekarang['hiragana']}\n\n"
+                   f"**Arti:**\n{soal_sekarang['arti']}")
     else:
         st.error(f"❌ **残念 (Kurang Tepat).**\n\n"
                  f"**Susunan yang benar:**\n\n`{' '.join(soal_sekarang['kunci'])}`\n\n"
-                 f"**🇯🇵 Kanji asli:** {soal_sekarang['kanji']}\n\n"
-                 f"**💡 Hiragana:** {soal_sekarang['hiragana']}\n\n"
-                 f"**🇮🇩 Arti:** {soal_sekarang['arti']}")
+                 f"**Kanji:**\n{soal_sekarang['kanji']}\n\n"
+                 f"**Hiragana:**\n{soal_sekarang['hiragana']}\n\n"
+                 f"**Arti:**\n{soal_sekarang['arti']}")
