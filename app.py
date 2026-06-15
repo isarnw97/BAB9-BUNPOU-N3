@@ -12,8 +12,8 @@ if "database_soal" not in st.session_state:
             "kanji": "だれかに自分の悩みを聞いてもらいたいと思うことがあります。",
             "hiragana": "だれか に じぶん の なやみ を きいて もらいたい と おもう こと が あります 。",
             "arti": "Kadang saya berpikir ingin seseorang mendengarkan keluh kesah saya.",
-            "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "ことが", "あります", "。"],
-            "soal": ["おもう", "悩み", "と", "聞いて", "が", "だれか", "مらい", "あります", "じぶん", "に", "たい", "ほしい", "こと", "の"]
+            "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "maxが", "あります", "。"],
+            "soal": ["お思う", "悩み", "と", "聞いて", "が", "だれか", "もらい", "あります", "じぶん", "に", "たい", "ほしい", "こと", "の"]
         },
         {
             "id": 2,
@@ -57,7 +57,7 @@ if "database_soal" not in st.session_state:
             "kanji": "年を取った親にはもう無理をしてほしくない。",
             "hiragana": "とし を とった おや に は もう むり を して ほしく ない 。",
             "arti": "Saya tidak ingin orang tua yang sudah berumur memaksakan diri lagi.",
-            "kunci": ["年", "を", "取った", "親", "in", "は", "もう", "無理", "を", "して", "ほしくない", "。"],
+            "kunci": ["年", "を", "取った", "親", "に", "は", "もう", "無理", "を", "して", "ほしくない", "。"],
             "soal": ["を", "取っ", "親", "に", "年", "もう", "して", "は", "無理", "ほしく", "ない", "た"]
         },
         # === BAGIAN 2 ===
@@ -113,7 +113,7 @@ if "database_soal" not in st.session_state:
             "kanji": "このクラスも今日でお別れです。いつかまたみんなで会えるといいですね。",
             "hiragana": "この くらす も きょう で おわかれ です 。 いつか また みんな で あえる と いい です ね 。",
             "arti": "Kelas ini juga akan berpisah hari ini. Semoga suatu saat kita semua bisa bertemu lagi ya.",
-            "kunci": ["この", "クラス", "も", "今日", "で", "お別れ", "です", "。", "いつか", "また", "みんな", "で", "会えると", "いいですね", "。"],
+            "kunci": ["この", "クラス", "も", "今日", "引で", "お別れ", "です", "。", "いつか", "また", "みんな", "で", "会えると", "いいですね", "。"],
             "soal": ["今日", "クラス", "別れ", "会える", "いい", "お", "です", "いつか", "また", "みんな", "で", "と", "です", "ね", "この", "も", "で"]
         },
         {
@@ -132,7 +132,7 @@ if "database_soal" not in st.session_state:
             "hiragana": "あした は にゅうがくしけん だ 。 がんばろう 。 ごうかく できたら いい なあ 。",
             "arti": "Besok adalah ujian masuk. Ayo berjuang. Semoga bisa lulus ya.",
             "kunci": ["あした", "は", "入学", "試験", "だ", "。", "がんばろう", "。", "合格", "できたら", "いいなあ", "。"],
-            "soal": ["試験", "合格", "あした", "入学", "だ", "がんばろう", "でき", "たら", "いい", "なあ", "は"]
+            "soal": ["試験", "合格", "あした", "入学", "だ", "gambaろう", "でき", "たら", "いい", "なあ", "は"]
         },
         {
             "id": 15,
@@ -163,9 +163,31 @@ if "database_soal" not in st.session_state:
         }
     ]
 
-# --- INISIALISASI STATE ---
+# --- INISIALISASI STATE INDEX SOAL ---
 if "index_soal" not in st.session_state:
     st.session_state.index_soal = 0
+
+# --- FITUR LOMPAT NOMOR SOAL (DROP-DOWN) ---
+pilihan_nomor = [f"Soal {i+1}" for i in range(len(st.session_state.database_soal))]
+pilihan_terpilih = st.selectbox(
+    "🧭 Lompat ke Soal Nomor:",
+    options=pilihan_nomor,
+    index=st.session_state.index_soal,
+    key="selectbox_navigasi"
+)
+
+idx_terpilih = pilihan_nomor.index(pilihan_terpilih)
+
+# Jika user memilih nomor yang berbeda di drop-down, ganti index dan reset state kuis
+if idx_terpilih != st.session_state.index_soal:
+    st.session_state.index_soal = idx_terpilih
+    st.session_state.jawaban_user = []
+    st.session_state.bank_kata = []
+    st.session_state.idx_kata_dipilih = None
+    st.session_state.status_periksa = False
+    st.rerun()
+
+# --- INISIALISASI STATE GAME LAINNYA ---
 if "jawaban_user" not in st.session_state:
     st.session_state.jawaban_user = []
 if "bank_kata" not in st.session_state:
@@ -314,8 +336,16 @@ render_kuis_lengkap()
 st.markdown("<br><hr>", unsafe_allow_html=True)
 
 # --- TOMBOL NAVIGASI UTAMA ---
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4 = st.columns(4)
 with col1:
+    if st.button("⬅️ Sblmnya", use_container_width=True):
+        st.session_state.index_soal = (st.session_state.index_soal - 1) % len(st.session_state.database_soal)
+        st.session_state.jawaban_user = []
+        st.session_state.bank_kata = []
+        st.session_state.idx_kata_dipilih = None
+        st.session_state.status_periksa = False
+        st.rerun()
+with col2:
     if st.button("Reset 🔄", use_container_width=True):
         st.session_state.jawaban_user = []
         for kata in st.session_state.bank_kata:
@@ -323,10 +353,10 @@ with col1:
         st.session_state.idx_kata_dipilih = None
         st.session_state.status_periksa = False
         st.rerun()
-with col2:
+with col3:
     if st.button("PERIKSA ✅", type="primary", use_container_width=True):
         st.session_state.status_periksa = True
-with col3:
+with col4:
     if st.button("Lanjut ➡️", use_container_width=True):
         st.session_state.index_soal = (st.session_state.index_soal + 1) % len(st.session_state.database_soal)
         st.session_state.jawaban_user = []
@@ -339,13 +369,11 @@ with col3:
 if st.session_state.status_periksa:
     user_strings = [x["teks"] for x in st.session_state.jawaban_user]
     
-    # Pembersihan string agar tanda baca dan spasi tidak bikin error saat pencocokan otomatis
     user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
     kunci_joined = "".join(soal_sekarang["kunci"]).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
 
-    # Normalisasi typo kecil atau perbedaan input tertentu agar fleksibel
-    user_joined = user_joined.replace("帰らせetいただき", "帰らせていただき").replace("帰らせていただき", "帰らせていただき")
-    kunci_joined = kunci_joined.replace("帰らせetいただき", "帰らせていただき").replace("帰らせていただき", "帰らせていただき")
+    user_joined = user_joined.replace("帰らせetいただき", "帰らせていただき")
+    kunci_joined = kunci_joined.replace("帰らせetいただき", "帰らせていただき")
 
     if user_joined == kunci_joined:
         st.success(f"🎉 **正解 (Benar)!** Susunan bunpou kamu sudah sempurna!\n\n"
