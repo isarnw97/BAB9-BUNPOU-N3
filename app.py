@@ -1,336 +1,367 @@
 import streamlit as st
-import random
 
 st.set_page_config(page_title="Susun Kata Jepang - Bab 9", layout="centered")
 
-# --- DATABASE SOAL LOKAL LENGKAP (BAB 9 - SOURCED FROM USER INPUT) ---
+# --- DATABASE SOAL LOKAL (BAB 9 - 17 SOAL) ---
 if "database_soal" not in st.session_state:
     st.session_state.database_soal = [
-        # === POLA 1: ～てもらいたい・～ていただきたい・～てほしい ===
+        # === BAGIAN 1 ===
         {
             "id": 1,
-            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Keinginan atas tindakan orang lain)",
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
             "kanji": "だれかに自分の悩みを聞いてもらいたいと思うことがあります。",
             "hiragana": "だれか に じぶん の なやみ を きいて もらいたい と おもう こと が あります 。",
-            "arti": "Ada kalanya saya merasa ingin seseorang mendengarkan keluh kesah saya.",
-            "kunci": ["だれかに", "自分の", "悩みを", "聞いて", "もらいたいと", "思うことが", "あります", "。"]
+            "arti": "Kadang saya berpikir ingin seseorang mendengarkan keluh kesah saya.",
+            "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "ことが", "あります", "。"],
+            "soal": ["思う", "悩み", "と", "聞いて", "ことが", "だれかに", "もらいたい", "あります", "自分の", "を", "。"]
         },
         {
             "id": 2,
-            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Keinginan atas tindakan orang lain)",
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
             "kanji": "この書類、ちょっと見ていただきたいんですが。",
             "hiragana": "この しょるい 、 ちょっと みて いただきたい ん です が 。",
-            "arti": "Dokumen ini, saya ingin Anda bersedia meluangkan waktu sebentar untuk melihatnya.",
-            "kunci": ["この書類", "、ちょっと", "見ていただきたい", "んですが", "。"]
+            "arti": "Dokumen ini, saya ingin Anda tolong lihat sebentar...",
+            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "maxsですが", "。"],
+            "soal": ["ちょっと", "maxsですが", "見て", "書類", "この", "いただき", "たい", "ん", "、", "。"]
         },
         {
             "id": 3,
-            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Keinginan atas tindakan orang lain)",
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
             "kanji": "この仕事はだれにも手伝ってもらいたくない。自分一人でやりたい。",
-            "hiragana": "この しごと は だれ に も てつだって もらいたくない 。 じぶん ひとり で やりたい 。",
-            "arti": "Pekerjaan ini saya tidak ingin dibantu oleh siapa pun. Saya ingin melakukannya sendiri.",
-            "kunci": ["この仕事は", "だれにも", "手伝ってもらいたくない", "。自分一人で", "やりたい", "。"]
+            "hiragana": "この しごと は だれ に も てつだって もらいたく ない 。 じぶん ひとり で やりたい 。",
+            "arti": "Pekerjaan ini saya tidak ingin dibantu siapapun. Saya ingin melakukannya sendiri.",
+            "kunci": ["この", "仕事", "は", "だれに", "も", "手伝って", "もらいたくない", "。", "自分", "一人", "で", "やりたい", "。"],
+            "soal": ["やりたい", "だれに", "もらいたくない", "は", "手伝って", "自分", "仕事", "で", "この", "も", "一人", "。", "。"]
         },
         {
             "id": 4,
-            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Keinginan atas tindakan orang lain)",
-            "kanji": "ぼくのそばにずっといてほしい。遠くへ行かないでほしい。",
-            "hiragana": "ぼく の そば に ずっと いて ほしい 。 とおく へ いかないで ほしい 。",
-            "arti": "Aku ingin kamu selalu berada di sisiku sepanjang waktu. Aku tidak ingin kamu pergi jauh.",
-            "kunci": ["ぼくの", "そばに", "ずっと", "いてほしい", "。遠くへ", "行かないでほしい", "。"]
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "ずっとぼくのそばにいてほしい。遠くへ行かないでほしい。",
+            "hiragana": "ずっと ぼく の そば に いて ほしい 。 とおく へ いかないで ほしい 。",
+            "arti": "Aku ingin kamu selalu berada di sisiku. Aku tidak ingin kamu pergi jauh.",
+            "kunci": ["ずっと", "ぼくの", "そば", "に", "いてほしい", "。", "遠く", "へ", "行かないで", "ほしい", "。"],
+            "soal": ["遠く", "に", "ずっと", "行かないで", "そば", "へ", "ほしい", "ぼくの", "いてほしい", "。", "。"]
         },
         {
             "id": 5,
-            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Keinginan atas tindakan orang lain)",
-            "kanji": "この村の自然環境をこれ以上こわさないでほしい。",
-            "hiragana": "この むら の しぜん かんきょう を これ いじょう こわさないで ほしい 。",
-            "arti": "Saya berharap lingkungan alam di desa ini tidak dirusak lebih jauh lagi.",
-            "kunci": ["この村の", "自然環境を", "これ以上", "こわさないでほしい", "。"]
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "これ以上この村の自然環境をこわさないでほしい。",
+            "hiragana": "これ いじょう この むら の しぜんかんきょう を こわさないで ほしい 。",
+            "arti": "Jangan merusak lingkungan alam desa ini lebih dari ini.",
+            "kunci": ["これ", "以上", "この", "村", "の", "自然環境", "を", "こわさないで", "ほしい", "。"],
+            "soal": ["自然環境", "を", "これ", "ほしい", "こわさないで", "村", "の", "以上", "この", "。"]
         },
         {
             "id": 6,
-            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Keinginan atas tindakan orang lain)",
-            "kanji": "親ももう年を取った。無理はしてほしくない。",
-            "hiragana": "おや も もう とし を とった 。 むり は して ほしくない 。",
-            "arti": "Orang tua pun sudah berumur. Saya tidak ingin mereka memaksakan diri bekerja keras.",
-            "kunci": ["親も", "もう", "年を取った", "。無理は", "してほしくない", "。"]
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "年を取った親にはもう無理をしてほしくない。",
+            "hiragana": "とし を とった おや に は もう むり を して ほしく ない 。",
+            "arti": "Saya tidak ingin orang tua yang sudah berumur memaksakan diri lagi.",
+            "kunci": ["年", "を", "取った", "親", "に", "は", "もう", "無理", "を", "して", "ほしくない", "。"],
+            "soal": ["を", "取った", "親", "に", "年", "もう", "して", "は", "無理", "ほしくない", "を", "。"]
         },
-        # === POLA 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい ===
+        # === BAGIAN 2 ===
         {
             "id": 7,
-            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せてほしい (Memohon izin melakukan sesuatu)",
-            "kanji": "「昼休みが短いよね」「もっとゆっくり昼ご飯を食べさせてもらいたいね」",
-            "hiragana": "「 ひるやすみ が みじかい よね 」 「 もっと ゆっくり ひるごはん を たべさせ て もらいたい ね 」",
-            "arti": "'Jam istirahat siang pendek ya.' 'Iya ya, rasanya ingin diizinkan makan siang dengan lebih santai.'",
-            "kunci": ["「昼休み", "が短い", "よね」", "「もっと", "ゆっくり", "昼ご飯を", "食べさせてもらいたい", "ね」"]
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "昼休みが短いよね。昼ご飯をもっとゆっくり食べさせてもらいたいね。",
+            "hiragana": "ひるやすみ が みじかい よね 。 ひるごはん を もっと ゆっくり たべさせ もらいたい ね 。",
+            "arti": "Istirahat makan siang pendek ya. Aku ingin diizinkan makan siang dengan lebih santai.",
+            "kunci": ["昼休み", "が", "短い", "よね", "。", "昼ご飯", "を", "もっと", "ゆっくり", "食べさせ", "もらいたい", "ね", "。"],
+            "soal": ["食べさせ", "もっと", "もらいたい", "が", "昼休み", "昼ご飯", "短い", "よね", "ゆっくり", "ね", "を", "。", "。"]
         },
         {
             "id": 8,
-            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せてほしい (Memohon izin melakukan sesuatu)",
-            "kanji": "店長に言ってみよう。そうだね。",
-            "hiragana": "てんちょう に いって みよう 。 そうだね 。",
-            "arti": "Mari coba bicarakan dan katakan kepada manajer toko. Benar juga ya.",
-            "kunci": ["店長に", "言ってみよう", "。", "そうだね", "。"]
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "今日は入管へ行かなければならないので、早く帰らせていただきたいのですが……。",
+            "hiragana": "きょう は にゅうかん へ いかなければ ならない ので 、 はやく かえらせて いただきたい の です が …… 。",
+            "arti": "Karena hari ini saya harus pergi ke imigrasi, saya ingin meminta izin untuk pulang cepat...",
+            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "maxsですが", "……", "。"],
+            "soal": ["帰らせて", "行かなければ", "いただきたい", "今日", "は", "入管", "へ", "ならない", "ので", "早く", "の", "maxsですが", "……", "、", "。"]
         },
         {
             "id": 9,
-            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せてほしい (Memohon izin melakukan sesuatu)",
-            "kanji": "今日、入管へ行かなければならないので、早く帰らせていただきたいのですが。",
-            "hiragana": "きょう 、 にゅうかん へ いかなければ ならない ので 、 はやく かえらせて いただきたい の です が 。",
-            "arti": "Karena hari ini saya harus pergi ke biro imigrasi, jika diizinkan saya ingin pulang lebih awal.",
-            "kunci": ["今日", "、入管へ", "行かなければならない", "ので、", "早く", "帰らせていただきたい", "のですが。"]
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせない geography もらいたいよ。",
+            "hiragana": "それ は さっき も せつめい した こと だ よ 。 なんど も おなじ こと を いわさせないde もらいたい よ 。",
+            "arti": "Itu kan hal yang sudah saya jelaskan tadi. Tolong jangan buat saya mengatakan hal yang sama berulang kali.",
+            "kunci": ["それ", "は", "さっき", "も", "説明", "した", "こと", "だよ", "。", "何度も", "同じ", "こと", "を", "言わさせないで", "もらいたい", "よ", "。"],
+            "soal": ["説明", "同じ", "もらいたい", "言わさせないで", "さっき", "した", "こと", "も", "何度も", "それ", "だよ", "は", "よ", "を", "。", "。"]
         },
         {
             "id": 10,
-            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せてほしい (Memohon izin melakukan sesuatu)",
-            "kanji": "さっき同じことを何度も説明したよ。それ以上は言わせないでもらいたいだよ。",
-            "hiragana": "さっき おなじ こと を なんど も せつめい した よ 。 それ いじょう は いわせないで もらいたい だよ 。",
-            "arti": "Tadi saya sudah menjelaskan hal yang sama berkali-kali. Tolong jangan buat saya mengatakannya lagi.",
-            "kunci": ["さっき", "切に同じ", "ことを", "何度も", "説明したよ", "。それ", "以上は", "言わせないでもらいたい", "だよ。"]
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "文化祭のポスターはわたしに作らせてほしいなあ。",
+            "hiragana": "ぶんかさい の ぽすたー は わたし に つくらせて ほしい なあ 。",
+            "arti": "Poster festival budaya, biarkan aku saja yang membuatnya.",
+            "kunci": ["文化祭", "の", "ポスター", "は", "わたし", "に", "作らせて", "ほしい", "なあ", "。"],
+            "soal": ["ポスター", "は", "作らせて", "文化祭", "わたし", "に", "ほしい", "なあ", "の", "。"]
         },
         {
             "id": 11,
-            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せてほしい (Memohon izin melakukan sesuatu)",
-            "kanji": "わたし、文化祭のポスターは作らせてほしいなあ。",
-            "hiragana": "わたし 、 ぶんかさい の ぽすたー は つくらせて ほしい なあ 。",
-            "arti": "Aku rasanya ingin diizinkan untuk membuat poster festival budaya nanti.",
-            "kunci": ["わたし", "、文化祭の", "ポスターは", "作らせてほしい", "なあ。"]
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "こんな暑い日に運動場で4時間も練習をさせないでほしいです。",
+            "hiragana": "こんな あつい ひ に うんどうじょう で よじかん も れんしゅう を させないで ほしい です 。",
+            "arti": "Di hari sepanas ini, saya harap tidak disuruh latihan sampai 4 jam di lapangan olahraga.",
+            "kunci": ["こんな", "暑い", "日", "に", "運動場", "で", "4時間", "も", "練習", "を", "させないで", "ほしい", "です", "。"],
+            "soal": ["暑い", "練習", "運動場", "4時間", "も", "させないで", "ほしい", "です", "こんな", "日", "に", "で", "を", "。"]
         },
+        # === BAGIAN 3 ===
         {
             "id": 12,
-            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せてほしい (Memohon izin melakukan sesuatu)",
-            "kanji": "こんな暑い日には、運動場で４時間も練習をさせないでほしいです。",
-            "hiragana": "こんな あつい ひ に は 、 うんどうじょう で よじかん も れんしゅう を させないで ほしい です 。",
-            "arti": "Di hari yang panas seperti ini, saya berharap tidak dipaksa latihan sampai 4 jam di lapangan olahraga.",
-            "kunci": ["こんな", "暑い日", "には", "、運動場で", "４時間も", "練習を", "させないでほしい", "です。"]
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "このクラスも今日でお別れです。いつかまたみんなで会えるといいですね。",
+            "hiragana": "この くらす も きょう で おわかれ です 。 いつか また みんな で あえる と いい です ね 。",
+            "arti": "Kelas ini juga akan berpisah hari ini. Semoga suatu saat kita semua bisa bertemu lagi ya.",
+            "kunci": ["この", "クラス", "も", "今日", "で", "お別れ", "です", "。", "いつか", "また", "みんな", "で", "会えると", "いいですね", "。"],
+            "soal": ["今日", "クラス", "お別れ", "会える", "いいですね", "です", "いつか", "また", "みんな", "で", "この", "も", "で", "。", "。"]
         },
-        # === POLA 3: ～といい・～ばいい・～たらいい (Harapan / Saran) ===
         {
             "id": 13,
-            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (A: Harapan / Keinginan Situasi Baik)",
-            "kanji": "今日でお別れですね。いつかまたみんなでこのクラスに会えるといいですね、先生もです。",
-            "hiragana": "きょう で おわかれ です ね 。 いつか また みんな で この くらす に あえると いい です ね 、 せんせい も です 。",
-            "arti": "Hari ini perpisahan kita ya. Semoga suatu saat nanti kita semua bisa bertemu lagi di kelas ini ya, Guru juga berharap demikian.",
-            "kunci": ["今日でお別れ", "ですね。", "いつかまた", "みんなで", "このクラスに", "会えるといい", "ですね、", "先生もです", "。"]
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "最近ずっと体の調子が悪い。悪い病気でなければいいが･･････。",
+            "hiragana": "さいきん ずっと からだ の ちょうし が わるい 。 わるい びょうき で なければ いい が ･･････ 。",
+            "arti": "Belakangan ini kondisi tubuh saya terus memburuk. Semoga bukan penyakit yang parah...",
+            "kunci": ["最近", "ずっと", "体", "の", "調子", "が", "悪い", "。", "悪い", "病気", "で", "なければ", "いいが", "･･････", "。"],
+            "soal": ["体", "が", "病気", "なければ", "いいが", "調子", "最近", "ずっと", "の", "悪い", "悪い", "で", "･･････", "。", "。"]
         },
         {
             "id": 14,
-            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (A: Harapan / Keinginan Situasi Baik)",
-            "kanji": "最近ずっと体の調子が悪い。悪い病気でなければいいが。",
-            "hiragana": "さいきん ずっと からだ の ちょうし が わるい 。 わるい びょうき でなければ いい が 。",
-            "arti": "Akhir-akhir ini kondisi tubuh saya terus memburuk. Semoga saja bukan penyakit yang parah.",
-            "kunci": ["最近ずっと", "体の調子が", "悪い。", "悪い病気", "でなければいい", "が。"]
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "あしたは入学試験だ。がんばろう。合格できたらいいなあ。",
+            "hiragana": "あした は にゅうがくしけん だ 。 がんばろう 。 ごうかく できたら いい なあ 。",
+            "arti": "Besok adalah ujian masuk. Ayo berjuang. Semoga bisa lulus ya.",
+            "kunci": ["あした", "は", "入学", "試験", "だ", "。", "がんばろう", "。", "合格", "できたら", "いいなあ", "。"],
+            "soal": ["試験", "合格", "あした", "入学", "だ", "がんばろう", "できたら", "いいなあ", "は", "。", "。", "。"]
         },
         {
             "id": 15,
-            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (A: Harapan / Keinginan Situasi Baik)",
-            "kanji": "あしたは入学試験だ。がんばろう。合格できたらいいなあ。",
-            "hiragana": "あした は にゅうがくしけん だ 。 がんばろう 。 ごうかく できたら いい なあ 。",
-            "arti": "Besok adalah ujian masuk sekolah. Mari berjuang. Semoga bisa lulus ya!",
-            "kunci": ["あしたは", "入学試験だ", "。がんばろう", "。合格できたら", "いいなあ", "。"]
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "疲れているようですね。あしたはゆっくり休むといいですよ。",
+            "hiragana": "つかれている よう です ね 。 あした は ゆっくり やすむ と いい です よ 。",
+            "arti": "Sepertinya Anda lelah. Besok sebaiknya Anda beristirahat dengan santai.",
+            "kunci": ["疲れている", "ようですね", "。", "あした", "は", "ゆっくり", "休むと", "いいですよ", "。"],
+            "soal": ["休むと", "疲れている", "ようですね", "あした", "ゆっくり", "いいですよ", "は", "。", "。"]
         },
         {
             "id": 16,
-            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (B: Saran / Rekomendasi Ringan)",
-            "kanji": "あしたはゆっくり休むといいですよ。疲れているようですからね。",
-            "hiragana": "あした は ゆっくり やすむ と いい です よ 。 つかれている よう です から ね 。",
-            "arti": "Besok sebaiknya Anda beristirahat dengan santai saja. Karena Anda terlihat sangat lelah.",
-            "kunci": ["あしたは", "ゆっくり", "休むといい", "ですよ。", "疲れている", "ようですからね", "。"]
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "その仕事、気が進まないのなら引き受けなければいいんじゃないですか。",
+            "hiragana": "その しごと 、 き が すすまない の なら ひきうけなければ いい ん じゃ ない です か 。",
+            "arti": "Pekerjaan itu, kalau kamu tidak berminat, bukankah sebaiknya tidak usah diambil saja?",
+            "kunci": ["その", "仕事", "、", "気が進まない", "のなら", "引き受けなければ", "いいんじゃないですか", "。"],
+            "soal": ["引き受けなければ", "気が進まない", "のなら", "その", "仕事", "いいんじゃないですか", "、", "。"]
         },
         {
             "id": 17,
-            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (B: Saran / Rekomendasi Ringan)",
-            "kanji": "その仕事、気が進まないのなら引き受けなければいいんじゃないですか。",
-            "hiragana": "その しごと 、 き が すすまない の なら ひきうけなければ いい ん じゃ ない です か 。",
-            "arti": "Pekerjaan itu, kalau kamu merasa tidak bersemangat menjalankannya, bukankah sebaiknya tidak usah diambil saja?",
-            "kunci": ["その仕事", "、気が進まない", "のなら", "引き受けなければいい", "んじゃないですか", "。"]
-        },
-        {
-            "id": 18,
-            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (B: Saran / Rekomendasi Ringan)",
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
             "kanji": "申込書の書き方がわからなければ、事務の人に聞いてみたらいいですよ。",
             "hiragana": "もうしこみしょ の かきかた が わからなければ 、 じむ の ひと に きいて みたら いい です よ 。",
-            "arti": "Jika tidak tahu cara mengisi formulir pendaftarannya, sebaiknya coba tanyakan saja kepada petugas administrasi.",
-            "kunci": ["申込書の", "書き方が", "わakらなければ", "、事務の人", "に聞いてみたらいい", "ですよ", "。"]
+            "arti": "Jika tidak tahu cara mengisi formulir pendaftaran, sebaiknya coba tanyakan pada orang tata usaha.",
+            "kunci": ["申込書", "の", "書き方", "が", "わからなければ", "、", "事務", "の", "人", "に", "聞いて", "みたら", "いいですよ", "。"],
+            "soal": ["人", "申込書", "書き方", "わからなければ", "事務", "の", "に", "聞いて", "みたら", "いいですよ", "の", "が", "、", "。"]
         }
     ]
 
-# --- STATE MANAGEMENT ---
+# --- MANAGEMENT STATE UTAMA ---
 if "index_soal" not in st.session_state:
     st.session_state.index_soal = 0
 if "jawaban_user" not in st.session_state:
     st.session_state.jawaban_user = []
+if "bank_kata" not in st.session_state:
+    st.session_state.bank_kata = []
 if "status_periksa" not in st.session_state:
     st.session_state.status_periksa = False
+if "idx_kata_dipilih" not in st.session_state:
+    st.session_state.idx_kata_dipilih = None
+if "mode_tukar" not in st.session_state:
+    st.session_state.mode_tukar = False
 
 soal_sekarang = st.session_state.database_soal[st.session_state.index_soal]
 
-if "soal_acak" not in st.session_state or st.session_state.get("current_soal_id") != soal_sekarang["id"]:
-    kata_list = list(soal_sekarang["kunci"])
-    random.shuffle(kata_list)
-    st.session_state.soal_acak = kata_list
-    st.session_state.current_soal_id = soal_sekarang["id"]
-    st.session_state.jawaban_user = []
-    st.session_state.status_periksa = False
+if not st.session_state.bank_kata and not st.session_state.jawaban_user:
+    st.session_state.bank_kata = [{"id": i, "teks": kata, "dipakai": False} for i, kata in enumerate(soal_sekarang["soal"])]
 
-# --- PROSES INTERAKSI URL PARAMETERS ---
-params = st.query_params
-if "add" in params:
-    kata_klik = params["add"]
-    if st.session_state.jawaban_user.count(kata_klik) < st.session_state.soal_acak.count(kata_klik):
-        st.session_state.jawaban_user.append(kata_klik)
-    st.query_params.clear()
-    st.rerun()
-
-if "del" in params:
-    idx_hapus = int(params["del"])
-    if idx_hapus < len(st.session_state.jawaban_user):
-        st.session_state.jawaban_user.pop(idx_hapus)
-    st.query_params.clear()
-    st.rerun()
-
-# --- CSS PREMIUM DESIGN (DUOLINGO STYLE) ---
+# --- STYLING CSS UTAMA ---
 st.markdown("""
 <style>
-    /* Info Box */
-    .info-box {
-        background-color: #f0f7ff;
-        padding: 16px;
-        border-radius: 16px;
-        border: 2px solid #b8daff;
-        margin-bottom: 25px;
-        box-shadow: 0px 4px 0px #b8daff;
+    div[data-testid="stStatusWidget"] + div div[data-testid="stWidgetLabel"] {
+        display: none;
     }
-    .text-bunpou { font-size: 0.95rem; font-weight: 800; color: #007bff; text-transform: uppercase; letter-spacing: 0.5px; margin: 0; }
-    .text-arti { font-size: 1.2rem; font-weight: 700; color: #212529; margin-top: 6px; }
-
-    /* Label Section */
-    .label-section {
-        font-size: 1rem;
-        font-weight: 700;
-        color: #495057;
-        margin-bottom: 8px;
-    }
-
-    /* KONTEN UTAMA: Flexbox horizontal lock anti meluber kebawah */
-    .flex-papan-jepang {
+    [data-testid="stHorizontalBlock"] {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: wrap !important;
-        justify-content: flex-start !important;
-        align-items: center !important;
-        gap: 10px !important;
-        width: 100% !important;
-        padding: 16px !important;
-        background-color: #f8f9fa !important;
-        border-radius: 18px !important;
-        min-height: 70px !important;
-        margin-bottom: 25px !important;
+        gap: 6px !important;
     }
-    
-    .papan-garis {
-        border: 2px dashed #ccc !important;
+    .stButton > button {
+        border-radius: 14px !important;
+        font-weight: bold !important;
+        padding: 8px 12px !important;
+        border: 1px solid #dcdcdc !important;
         background-color: #ffffff !important;
+        color: #333333 !important;
     }
+    .info-box {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 12px;
+        border-left: 5px solid #ff4b4b;
+        margin-bottom: 20px;
+    }
+    .text-bunpou { font-size: 1.05rem; font-weight: bold; color: #ff4b4b; margin: 0 0 6px 0; }
+    .text-arti { font-size: 1.2rem; font-weight: bold; color: #1a1a1a; margin: 0; }
 
-    /* PREMIUM 3D BUTTON KAPSUL (GARANSI TETAP HORIZONTAL) */
-    .tombol-kata-inline {
+    /* Navigasi Lingkaran Instan (st.pills) */
+    div[data-testid="stPills"] button {
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
+        padding: 0 !important;
+        min-width: 40px !important;
         background-color: #ffffff !important;
-        color: #3c3c3c !important;
-        text-decoration: none !important;
-        font-weight: 700 !important;
-        font-size: 1.1rem !important;
-        padding: 10px 18px !important;
-        border-radius: 14px !important;
-        border: 2px solid #e5e5e5 !important;
-        box-shadow: 0px 4px 0px #e5e5e5 !important;
-        white-space: nowrap !important;
-        transition: all 0.1s ease;
-        margin: 2px 0 !important;
+        border: 1px solid #cccccc !important;
+        color: #333333 !important;
+    }
+    div[data-testid="stPills"] button[aria-pressed="true"] {
+        background-color: #ffeef0 !important;
+        border: 2px solid #ff4b4b !important;
+        color: #ff4b4b !important;
+        font-weight: bold !important;
     }
     
-    .tombol-kata-inline:active {
-        transform: translateY(4px) !important;
-        box-shadow: 0px 0px 0px #e5e5e5 !important;
-    }
-    
-    /* Tombol Mati (Sudah Dipilih) */
-    .tombol-mati {
-        background-color: #e5e5e5 !important;
-        color: #e5e5e5 !important;
-        border: 2px solid #e5e5e5 !important;
-        box-shadow: 0px 0px 0px !important;
-        pointer-events: none !important;
-        user-select: none !important;
-    }
-
-    /* Badge Analisis Urutan Posisi */
-    .badge-pos-container { display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px; margin-top: 15px; }
+    /* Tampilan badge evaluasi indeks posisi */
     .badge-pos-correct {
-        background-color: #d4edda; color: #155724; padding: 10px 14px;
-        border-radius: 12px; font-weight: 700; display: inline-flex;
-        flex-direction: column; align-items: center; border: 2px solid #c3e6cb;
+        background-color: #d4edda;
+        color: #155724;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-weight: bold;
+        display: inline-block;
+        margin: 5px;
+        border: 2px solid #c3e6cb;
+        text-align: center;
     }
     .badge-pos-wrong {
-        background-color: #f8d7da; color: #721c24; padding: 10px 14px;
-        border-radius: 12px; font-weight: 700; display: inline-flex;
-        flex-direction: column; align-items: center; border: 2px solid #f5c6cb;
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-weight: bold;
+        display: inline-block;
+        margin: 5px;
+        border: 2px solid #f5c6cb;
+        text-align: center;
     }
-    .sub-index { font-size: 0.75rem; color: #6c757d; margin-top: 4px; border-top: 1px dashed rgba(0,0,0,0.1); width: 100%; text-align:center;}
+    .sub-index {
+        font-size: 0.75rem;
+        display: block;
+        color: #555555;
+        margin-top: 2px;
+        border-top: 1px dashed rgba(0,0,0,0.15);
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- HEADER APP ---
-st.markdown("<h2 style='text-align: center; color: #212529; font-weight: 800; margin-bottom: 2px;'>🦉 Bunpou Master</h2>", unsafe_allow_html=True)
-st.markdown(f"<p style='text-align: center; color: #6c757d; font-weight: 600; margin-top: 0;'>Bab 9 — Soal {st.session_state.index_soal + 1} dari {len(st.session_state.database_soal)}</p>", unsafe_allow_html=True)
-st.markdown("<hr style='margin-top: 10px; margin-bottom: 20px;'>", unsafe_allow_html=True)
+st.title("🦉 Bunpou Master - Bab 9")
+st.caption(f"Soal {st.session_state.index_soal + 1} dari {len(st.session_state.database_soal)}")
+st.markdown("---")
 
-# Info Box Pola Bunpou & Arti
 st.markdown(f"""
 <div class="info-box">
     <p class="text-bunpou">📖 {soal_sekarang['pola']}</p>
-    <p class="text-arti">{soal_sekarang['arti']}</p>
+    <p class="text-arti">🇮🇩 {soal_sekarang['arti']}</p>
 </div>
 """, unsafe_allow_html=True)
 
-# --- PANEL 1: AREA KALIMAT SUSUNAN USER ---
-st.markdown("<div class='label-section'>Kalimat Susunanmu:</div>", unsafe_allow_html=True)
-
-html_papan_user = "<div class='flex-papan-jepang papan-garis'>"
-if not st.session_state.jawaban_user:
-    html_papan_user += "<span style='color:#adb5bd; font-style:italic; font-weight:600;'>Ketuk kata di bawah untuk mulai menyusun...</span>"
-else:
-    for idx, kata in enumerate(st.session_state.jawaban_user):
-        html_papan_user += f"<a href='?del={idx}' target='_self' class='tombol-kata-inline'>{kata}</a>"
-html_papan_user += "</div>"
-
-st.markdown(html_papan_user, unsafe_allow_html=True)
-
-# --- PANEL 2: AREA PILIHAN KATA ASAL ---
-st.markdown("<div class='label-section'>Pilihan Kata:</div>", unsafe_allow_html=True)
-
-temp_jawaban = list(st.session_state.jawaban_user)
-html_papan_asal = "<div class='flex-papan-jepang'>"
-for kata in st.session_state.soal_acak:
-    if kata in temp_jawaban:
-        html_papan_asal += f"<span class='tombol-kata-inline tombol-mati'>{kata}</span>"
-        temp_jawaban.remove(kata)
+# --- MENU UTAMA INTERAKTIF (FRAGMENT) ---
+@st.fragment
+def render_kuis_lengkap():
+    st.write("### Kalimat Susunanmu:")
+    
+    mode = st.radio(
+        "Aksi Sentuhan Papan:",
+        ["Copot Kata (Normal)", "Tukar Posisi 2 Kata 🔄"],
+        horizontal=True,
+        label_visibility="collapsed"
+    )
+    
+    if mode == "Tukar Posisi 2 Kata 🔄":
+        st.session_state.mode_tukar = True
+        if st.session_state.idx_kata_dipilih is not None:
+            kata_terpilih = st.session_state.jawaban_user[st.session_state.idx_kata_dipilih]["teks"]
+            st.markdown(f'<div style="background-color:#fffaf0; border:1px dashed #dd6b20; padding:10px; border-radius:8px; color:#7b341e; font-weight:bold; margin-bottom:10px;">📍 Kata [{kata_terpilih}] terpilih. Klik kata tujuan!</div>', unsafe_allow_html=True)
+        else:
+            st.markdown('<div style="background-color:#fffaf0; border:1px dashed #dd6b20; padding:10px; border-radius:8px; color:#7b341e; font-weight:bold; margin-bottom:10px;">💡 Klik kata pertama yang ingin ditukar posisinya...</div>', unsafe_allow_html=True)
     else:
-        html_papan_asal += f"<a href='?add={kata}' target='_self' class='tombol-kata-inline'>{kata}</a>"
-html_papan_asal += "</div>"
+        st.session_state.mode_tukar = False
+        st.session_state.idx_kata_dipilih = None
 
-st.markdown(html_papan_asal, unsafe_allow_html=True)
+    if not st.session_state.jawaban_user:
+        st.markdown("<div style='border-bottom: 2px solid #e5e5e5; padding-bottom: 15px; margin-bottom: 20px; color:#aaaaaa; font-style:italic;'>Klik kata di bawah untuk mulai menyusun...</div>", unsafe_allow_html=True)
+    else:
+        opsi_papan = [f"{idx}. {item['teks']}" for idx, item in enumerate(st.session_state.jawaban_user)]
+        format_papan = {opt: opt.split(". ", 1)[1] for opt in opsi_papan}
+        
+        klik_papan = st.pills(
+            label="Papan Jawaban",
+            options=opsi_papan,
+            format_func=lambda x: format_papan[x],
+            selection_mode="single",
+            key="pills_papan_jawaban",
+            label_visibility="collapsed"
+        )
+        st.markdown("<div style='border-bottom: 2px solid #e5e5e5; margin-top: -10px; margin-bottom: 25px;'></div>", unsafe_allow_html=True)
+        
+        if klik_papan:
+            idx_klik = int(klik_papan.split(". ")[0])
+            
+            if st.session_state.mode_tukar:
+                if st.session_state.idx_kata_dipilih is None:
+                    st.session_state.idx_kata_dipilih = idx_klik
+                    st.rerun()
+                else:
+                    idx1 = st.session_state.idx_kata_dipilih
+                    idx2 = idx_klik
+                    if idx1 != idx2:
+                        st.session_state.jawaban_user[idx1], st.session_state.jawaban_user[idx2] = st.session_state.jawaban_user[idx2], st.session_state.jawaban_user[idx1]
+                    st.session_state.idx_kata_dipilih = None
+                    st.rerun()
+            else:
+                kata_dicopot = st.session_state.jawaban_user.pop(idx_klik)
+                for kata_bank in st.session_state.bank_kata:
+                    if kata_bank["id"] == kata_dicopot["id"]:
+                        kata_bank["dipakai"] = False
+                st.rerun()
 
-st.markdown("<br>", unsafe_allow_html=True)
+    st.write("### Pilihan Kata:")
+    cols_pilihan = st.columns(4)
+    for idx, item in enumerate(st.session_state.bank_kata):
+        posisi_kolom = idx % 4
+        with cols_pilihan[posisi_kolom]:
+            if item["dipakai"]:
+                st.button(" ", key=f"disabled_{item['id']}", disabled=True, use_container_width=True)
+            else:
+                if st.button(item["teks"], key=f"pilih_{item['id']}", use_container_width=True):
+                    item["dipakai"] = True
+                    st.session_state.jawaban_user.append(item)
+                    st.rerun()
 
-# --- PANEL NAVIGASI UTAMA ---
+render_kuis_lengkap()
+
+st.markdown("<br><hr>", unsafe_allow_html=True)
+
+# --- TOMBOL NAVIGASI UTAMA ---
 col1, col2, col3 = st.columns([1, 1.2, 1])
 with col1:
     if st.button("RESET 🔄", use_container_width=True):
         st.session_state.jawaban_user = []
+        for kata in st.session_state.bank_kata:
+            kata["dipakai"] = False
+        st.session_state.idx_kata_dipilih = None
         st.session_state.status_periksa = False
         st.rerun()
 with col2:
@@ -339,44 +370,90 @@ with col2:
 with col3:
     if st.button("LANJUT ➡️", use_container_width=True):
         st.session_state.index_soal = (st.session_state.index_soal + 1) % len(st.session_state.database_soal)
-        if "soal_acak" in st.session_state: 
-            del st.session_state.soal_acak
+        st.session_state.jawaban_user = []
+        st.session_state.bank_kata = []
+        st.session_state.idx_kata_dipilih = None
+        st.session_state.status_periksa = False
         st.rerun()
 
-# --- VALIDASI HASIL KOREKSI ---
+st.markdown("<br>", unsafe_allow_html=True)
+
+# --- 🎯 FITUR LOMPAT INSTAN KE NOMOR SOAL ---
+st.markdown("<div style='text-align: center; font-weight: bold; font-size: 1.05rem;'>🎯 Lompat Instan ke Nomor Soal:</div>", unsafe_allow_html=True)
+opsi_pills_navigasi = [str(i+1) for i in range(len(st.session_state.database_soal))]
+
+navigasi_klik = st.pills(
+    label="Navigasi Instan Nomor Soal",
+    options=opsi_pills_navigasi,
+    selection_mode="single",
+    label_visibility="collapsed",
+    key="pills_navigasi_instan"
+)
+
+if navigasi_klik:
+    idx_pindah = int(navigasi_klik) - 1
+    if idx_pindah != st.session_state.index_soal:
+        st.session_state.index_soal = idx_pindah
+        st.session_state.jawaban_user = []
+        st.session_state.bank_kata = []
+        st.session_state.idx_kata_dipilih = None
+        st.session_state.status_periksa = False
+        st.rerun()
+
+# --- VALIDASI JAWABAN DENGAN STRIKT INDEKS MATCHING ---
 if st.session_state.status_periksa:
-    user_strings = st.session_state.jawaban_user
+    user_strings = [x["teks"] for x in st.session_state.jawaban_user]
     kunci_strings = soal_sekarang["kunci"]
     
-    user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "").replace("「", "").replace("」", "").replace("！", "").replace("？", "")
-    kunci_joined = "".join(kunci_strings).replace(" ", "").replace("、", "").replace("。", "").replace("「", "").replace("」", "").replace("！", "").replace("？", "")
+    user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
+    kunci_joined = "".join(kunci_strings).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
 
-    st.markdown("<br><hr>", unsafe_allow_html=True)
     if user_joined == kunci_joined:
-        st.success(f"🎉 **正解 (Benar)!** Susunan kalimatmu sudah luar biasa tepat!\n\n"
+        st.success(f"🎉 **正解 (Benar)!** Susunan posisi kata kamu sudah sempurna!\n\n"
                    f"**Kanji:**\n{soal_sekarang['kanji']}\n\n"
                    f"**Hiragana:**\n{soal_sekarang['hiragana']}\n\n"
                    f"**Arti:**\n{soal_sekarang['arti']}")
     else:
-        st.error("❌ **残念 (Kurang Tepat). Analisis Posisi Urutan Kata:**")
+        st.error("❌ **残念 (Kurang Tepat). Mari analisa posisi susunan kata kamu:**")
         
-        html_koreksi = "<div class='badge-pos-container'>"
+        # --- LOGIKA KOREKSI MUTLAK BERDASARKAN URUTAN INDEKS ---
+        html_koreksi = "<div style='line-height: 2.5; margin-bottom: 20px;'>"
+        
+        # Ambil panjang maksimal untuk mengantisipasi jika panjang kata yang disusun user berbeda dengan kunci
         max_len = max(len(user_strings), len(kunci_strings))
         
         for idx in range(max_len):
+            # Jika user menyusun kata sampai urutan ini
             if idx < len(user_strings):
                 kata_user = user_strings[idx]
                 
+                # Cek apakah kata di posisi ini cocok secara mutlak dengan kata kunci jawaban di posisi yang sama
                 if idx < len(kunci_strings) and kata_user == kunci_strings[idx]:
-                    html_koreksi += f"""<div class='badge-pos-correct'>{kata_user}<span class='sub-index'>Posisi {idx+1}</span></div>"""
+                    # Hijau = Posisi Tepat Semesta
+                    html_koreksi += f"""
+                    <span class='badge-pos-correct'>
+                        {kata_user}
+                        <span class='sub-index'>Urutan {idx+1} (Benar)</span>
+                    </span> """
                 else:
-                    html_koreksi += f"""<div class='badge-pos-wrong'>{kata_user}<span class='sub-index'>Posisi {idx+1}</span></div>"""
+                    # Merah = Salah urutan / tidak sesuai tempat aslinya
+                    html_koreksi += f"""
+                    <span class='badge-pos-wrong'>
+                        {kata_user}
+                        <span class='sub-index'>Urutan {idx+1} (Salah)</span>
+                    </span> """
             else:
-                html_koreksi += f"""<div class='badge-pos-wrong' style='border: 2px dashed #ff4b4b; background-color:#fff5f5; color:#ff4b4b;'>(Kosong)<span class='sub-index'>Posisi {idx+1}</span></div>"""
+                # Jika user kekurangan menginput sisa kata kunci
+                html_koreksi += f"""
+                <span class='badge-pos-wrong' style='border: 2px dashed #ff4b4b; background-color:#fff5f5; color:#ff4b4b;'>
+                    (Kosong)
+                    <span class='sub-index'>Urutan {idx+1} Belum Diisi</span>
+                </span> """
                 
         html_koreksi += "</div>"
+        
+        st.markdown("**Analisis Presisi Posisi Kata Kamu:**", unsafe_allow_html=True)
         st.markdown(html_koreksi, unsafe_allow_html=True)
-        st.markdown("<br>", unsafe_allow_html=True)
         
         st.markdown(f"**💡 Panduan Urutan yang Benar:**\n\n`{' ➔ '.join(soal_sekarang['kunci'])}`\n\n"
                     f"**Kanji:**\n{soal_sekarang['kanji']}\n\n"
