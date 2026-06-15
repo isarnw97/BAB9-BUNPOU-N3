@@ -2,94 +2,164 @@ import streamlit as st
 
 st.set_page_config(page_title="Susun Kata Jepang - Bab 9", layout="centered")
 
-# --- DATABASE SOAL LOKAL (BAB 9) ---
+# --- DATABASE SOAL LOKAL (BAB 9 - 17 SOAL BARU) ---
 if "database_soal" not in st.session_state:
     st.session_state.database_soal = [
-        # --- Pola 1: 〜という点から見ると / 〜という点から考えて ---
+        # === BAGIAN 1 ===
         {
-            "id": 1, 
-            "pola": "Pola 1: 〜点から見ると ・ 〜点から考えて (Dilihat dari sudut pandang... / Mempertimbangkan poin...)",
-            "kanji": "経済的な点から見ると、この計画はあまり現実的ではないようだ。",
-            "hiragana": "けいざいてきな てん から みると 、 この けいかく は あまり げんじつてき で は ない よう だ 。",
-            "arti": "Dilihat dari sudut pandang ekonomi, rencana ini tampaknya tidak begitu realistis.",
-            "kunci": ["経済的な", "点", "から", "見ると", "、", "この", "計画", "は", "あまり", "現実的", "では", "ない", "ようだ", "。"],
-            "soal": ["経済的な", "点", "から", "見ると", "、", "この", "計画", "は", "あまり", "理想的", "では", "ない", "ようだ", "。"]
+            "id": 1,
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "だれかに自分の悩みを聞いてもらいたいと思うことがあります。",
+            "hiragana": "だれか に じぶん の なやみ を きいて もらいたい と おもう こと が あります 。",
+            "arti": "Kadang saya berpikir ingin seseorang mendengarkan keluh kesah saya.",
+            "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "ことが", "あります", "。"],
+            "soal": ["おもう", "悩み", "と", "聞いて", "が", "だれか", "مらい", "あります", "じぶん", "に", "たい", "ほしい", "こと", "の"]
         },
         {
-            "id": 2, 
-            "pola": "Pola 1: 〜点から見ると ・ 〜点から考えて (Dilihat dari sudut pandang... / Mempertimbangkan poin...)",
-            "kanji": "健康という点から考えても、毎日の十分な睡眠は不可欠です。",
-            "hiragana": "けんこう という てん から かんがえて も 、 まいにち の じゅうぶんな すいみん は ふかけつ です 。",
-            "arti": "Mempertimbangkan dari poin kesehatan pun, tidur yang cukup setiap hari adalah hal yang mutlak diperlukan.",
-            "kunci": ["健康", "という", "点", "から", "考えて", "も", "、", "毎日", "の", "十分な", "睡眠", "は", "不可欠", "です", "。"],
-            "soal": ["健康", "という", "点", "から", "考えて", "も", "、", "毎日", "の", "十分な", "睡眠", "は", "不必要", "です", "。"]
-        },
-        # --- Pola 2: 〜うえに ---
-        {
-            "id": 3, 
-            "pola": "Pola 2: 〜うえに (Selain... juga... / Sudah... ditambah lagi...)",
-            "kanji": "この町は、物価が安いうえに治安が良いのでとても住みやすい。",
-            "hiragana": "この まち は 、 ぶっか が やすい うえ に ちあん が よい ので とても すみやすい 。",
-            "arti": "Kota ini, selain harga barangnya murah, keamanan lingkungannya juga bagus sehingga sangat enak untuk ditinggali.",
-            "kunci": ["この", "町", "は", "、", "物価", "が", "安い", "うえに", "治安", "が", "良い", "ので", "とても", "住みやすい", "。"],
-            "soal": ["この", "町", "は", "、", "物価", "が", "高い", "うえに", "治安", "が", "良い", "ので", "とても", "住みやすい", "。"]
+            "id": 2,
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "この書類、ちょっと見ていただきたいんですが。",
+            "hiragana": "この しょるい 、 ちょっと みて いただきたい ん です が 。",
+            "arti": "Dokumen ini, saya ingin Anda tolong lihat sebentar...",
+            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "ですが", "。"],
+            "soal": ["ちょっと", "が", "見て", "書類", "この", "です", "いただき", "たい", "ん"]
         },
         {
-            "id": 4, 
-            "pola": "Pola 2: 〜うえに (Selain... juga... / Sudah... ditambah lagi...)",
-            "kanji": "昨日は道に迷ったうえに雨に降られて、本当に大変な一日だった。",
-            "hiragana": "きのう は みち に まよった うえ に あめ に ふられて 、 ほんとう に たいへんな いちにち だった 。",
-            "arti": "Hari kemarin sudah tersesat di jalan, ditambah lagi diguyur hujan, benar-benar hari yang melelahkan.",
-            "kunci": ["昨日", "は", "道", "に", "迷った", "うえに", "雨", "に", "降られて", "、", "本当に", "大変な", "一日", "だった", "。"],
-            "soal": ["昨日", "は", "道", "に", "迷った", "うえに", "晴れ", "に", "降られて", "、", "本当に", "大変な", "一日", "だった", "。"]
-        },
-        # --- Pola 3: 〜うちに / 〜ないうちに ---
-        {
-            "id": 5, 
-            "pola": "Pola 3: 〜うちに ・ 〜ないうちに (Selagi... / Mumpung... / Sebelum...)",
-            "kanji": "スープが温かいうちに早く召し上がってください。",
-            "hiragana": "スープ が あたたかい うち に はやく めしあがってください 。",
-            "arti": "Mumpung supnya masih hangat, silakan segera dinikmati.",
-            "kunci": ["スープ", "が", "温かい", "うちに", "早く", "召し上がってください", "。"],
-            "soal": ["スープ", "が", "冷たい", "うちに", "早く", "召し上がってください", "。"]
+            "id": 3,
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "この仕事はだれにも手伝ってもらいたくない。自分一人でやりたい。",
+            "hiragana": "この しごと は だれ に も てつだって もらいたく ない 。 じぶん ひとり で やりたい 。",
+            "arti": "Pekerjaan ini saya tidak ingin dibantu siapapun. Saya ingin melakukannya sendiri.",
+            "kunci": ["この", "仕事", "は", "だれに", "も", "手伝って", "もらいたくない", "。", "自分", "一人", "で", "やりたい", "。"],
+            "soal": ["やり", "だれ", "もらい", "は", "手伝っ", "じぶん", "に", "仕事", "たく", "で", "この", "ない", "たい", "も", "一人"]
         },
         {
-            "id": 6, 
-            "pola": "Pola 3: 〜うちに ・ 〜ないうちに (Selagi... / Mumpung... / Sebelum...)",
-            "kanji": "暗くならないうちに、山を下りて家へ帰ることにしよう。",
-            "hiragana": "くらく ならない うち に 、 やま を おりて いえ へ かえる こと に しよう 。",
-            "arti": "Sebelum hari menjadi gelap, mari kita turun gunung dan memutuskan pulang ke rumah.",
-            "kunci": ["暗く", "ならない", "うちに", "、", "山", "を", "下りて", "家", "へ", "帰る", "ことにしよう", "。"],
-            "soal": ["明るく", "ならない", "うちに", "、", "山", "を", "下りて", "家", "へ", "帰る", "ことにしよう", "。"]
-        },
-        # --- Pola 4: 〜にかわって / 〜にかわり ---
-        {
-            "id": 7, 
-            "pola": "Pola 4: 〜にかわって (Sebagai pengganti... / Mewakili...)",
-            "kanji": "病気の社長にかわって、副社長が会議の挨拶をすることになりました。",
-            "hiragana": "びょうき の しゃちょう に かわって 、 ふくしゃちょう が かいぎ の あいさつ を する こと に なりました 。",
-            "arti": "Mewakili direktur yang sedang sakit, wakil direktur diputuskan untuk menyampaikan salam di rapat.",
-            "kunci": ["病気", "の", "社長", "に", "かわって", "、", "副社長", "が", "会議", "の", "挨拶", "を", "する", "ことに", "なりました", "。"],
-            "soal": ["元気", "の", "社長", "に", "かわって", "、", "副社長", "が", "会議", "の", "挨拶", "を", "する", "ことに", "なりました", "。"]
-        },
-        # --- Pola 5: 〜通して / 〜通じて ---
-        {
-            "id": 8, 
-            "pola": "Pola 5: 〜通して ・ 〜通じて (Melalui... / Sepanjang...)",
-            "kanji": "私たちは共通の趣味を通して、多くの素晴らしい友人に出会った。",
-            "hiragana": "わたしたち は きょうつう の しゅみ を とおして 、 おおく の すばらしい ゆうじん に であった 。",
-            "arti": "Kami melalui hobi yang sama, telah bertemu dengan banyak teman yang luar biasa.",
-            "kunci": ["私たち", "は", "共通", "の", "趣味", "を", "通して", "、", "多く", "の", "素晴らしい", "友人", "に", "出会った", "。"],
-            "soal": ["私たち", "は", "共通", "の", "趣味", "を", "通して", "、", "少なく", "の", "素晴らしい", "友人", "に", "出会った", "。"]
+            "id": 4,
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "ずっとぼくのそばにいてほしい。遠くへ行かないでほしい。",
+            "hiragana": "ずっと ぼく の そば に いて ほしい 。 とおく へ いかないで ほしい 。",
+            "arti": "Aku ingin kamu selalu berada di sisiku. Aku tidak ingin kamu pergi jauh.",
+            "kunci": ["ずっと", "ぼくの", "そば", "に", "いてほしい", "。", "遠く", "へ", "行かないで", "ほしい", "。"],
+            "soal": ["遠く", "に", "ずっと", "行か", "そば", "ない", "へ", "ほしい", "ぼく", "で", "の", "いて", "ほしい"]
         },
         {
-            "id": 9, 
-            "pola": "Pola 5: 〜通して ・ 〜通じて (Melalui... / Sepanjang...)",
-            "kanji": "この地域は一年を通じて、比較的温暖な気候が続きます。",
-            "hiragana": "この ちいき は いちねん を つうじて 、 ひかくてき おんだんな きこう が つづきます 。",
-            "arti": "Wilayah ini sepanjang tahun, berlanjut dengan iklim yang relatif hangat.",
-            "kunci": ["この", "地域", "は", "一年", "を", "通じて", "、", "比較的", "温暖な", "気候", "が", "続きます", "。"],
-            "soal": ["この", "地域", "は", "一年", "を", "通じて", "、", "比較的", "寒冷な", "気候", "が", "続きます", "。"]
+            "id": 5,
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "これ以上この村の自然環境をこわさないでほしい。",
+            "hiragana": "これ いじょう この むら の しぜんかんきょう を こわさないで ほしい 。",
+            "arti": "Jangan merusak lingkungan alam desa ini lebih dari ini.",
+            "kunci": ["これ", "以上", "この", "村", "の", "自然環境", "を", "こわさないで", "ほしい", "。"],
+            "soal": ["自然環境", "を", "これ", "ほしい", "ない", "こわさ", "村", "の", "以上", "この", "で"]
+        },
+        {
+            "id": 6,
+            "pola": "Bagian 1: ～てもらいたい・～ていただきたい・～てほしい (Mengharap orang lain melakukan sesuatu)",
+            "kanji": "年を取った親にはもう無理をしてほしくない。",
+            "hiragana": "とし を とった おや に は もう むり を して ほしく ない 。",
+            "arti": "Saya tidak ingin orang tua yang sudah berumur memaksakan diri lagi.",
+            "kunci": ["年", "を", "取った", "親", "in", "は", "もう", "無理", "を", "して", "ほしくない", "。"],
+            "soal": ["を", "取っ", "親", "に", "年", "もう", "して", "は", "無理", "ほしく", "ない", "た"]
+        },
+        # === BAGIAN 2 ===
+        {
+            "id": 7,
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "昼休みが短いよね。昼ご飯をもっとゆっくり食べさせてもらいたいね。",
+            "hiragana": "ひるやすみ が みじかい よね 。 ひるごはん を もっと ゆっくり たべさせ もらいたい ね 。",
+            "arti": "Istirahat makan siang pendek ya. Aku ingin diizinkan makan siang dengan lebih santai.",
+            "kunci": ["昼休み", "が", "短い", "よね", "。", "昼ご飯", "を", "もっと", "ゆっくり", "食べさせ", "もらいたい", "ね", "。"],
+            "soal": ["食べ", "もっと", "もらい", "が", "昼休み", "昼ご飯", "短い", "させ", "て", "たい", "ね", "よね", "ゆっくり", "ね", "を"]
+        },
+        {
+            "id": 8,
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "今日は入管へ行かなければならないので、早く帰らせていただきたいのですが……。",
+            "hiragana": "きょう は にゅうかん へ いかなければ ならない ので 、 はやく かえらせて いただきたい の です が …… 。",
+            "arti": "Karena hari ini saya harus pergi ke imigrasi, saya ingin meminta izin untuk pulang cepat...",
+            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "ですが", "……", "。"],
+            "soal": ["帰ら", "なければ", "いただき", "今日", "は", "入管", "へ", "行か", "なら", "ない", "ので", "早く", "せて", "たい", "の", "ですが", "……"]
+        },
+        {
+            "id": 9,
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせないでもらいたいよ。",
+            "hiragana": "それ は さっき も せつめい した こと だ よ 。 なんど も おなじ こと を いわさせないで もらいたい よ 。",
+            "arti": "Itu kan hal yang sudah saya jelaskan tadi. Tolong jangan buat saya mengatakan hal yang sama berulang kali.",
+            "kunci": ["それ", "は", "さっき", "も", "説明", "した", "こと", "だよ", "。", "何度も", "同じ", "こと", "を", "言わさせないで", "もらいたい", "よ", "。"],
+            "soal": ["説明", "同じ", "もらい", "言わ", "さっき", "し", "と", "こと", "も", "何度", "それ", "だよ", "は", "も", "た", "ない", "で", "たい", "よ", "を"]
+        },
+        {
+            "id": 10,
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "文化祭のポスターはわたしに作らせてほしいなあ。",
+            "hiragana": "ぶんかさい の ぽすたー は わたし に つくらせて ほしい なあ 。",
+            "arti": "Poster festival budaya, biarkan aku saja yang membuatnya.",
+            "kunci": ["文化祭", "の", "ポスター", "は", "わたし", "に", "作らせて", "ほしい", "なあ", "。"],
+            "soal": ["ポスター", "は", "作ら", "文化祭", "わたし", "に", "せて", "ほしい", "なあ", "の"]
+        },
+        {
+            "id": 11,
+            "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
+            "kanji": "こんな暑い日に運動場で4時間も練習をさせないでほしいです。",
+            "hiragana": "こんな あつい ひ に うんどうじょう で よじかん も れんしゅう を させないで ほしい です 。",
+            "arti": "Di hari sepanas ini, saya harap tidak disuruh latihan sampai 4 jam di lapangan olahraga.",
+            "kunci": ["こんな", "暑い", "日", "に", "運動場", "で", "4時間", "も", "練習", "を", "させないで", "ほしい", "です", "。"],
+            "soal": ["暑い", "練習", "運動場", "4時間", "も", "ない", "ほしい", "です", "こんな", "日", "に", "で", "を", "させ", "で"]
+        },
+        # === BAGIAN 3 ===
+        {
+            "id": 12,
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "このクラスも今日でお別れです。いつかまたみんなで会えるといいですね。",
+            "hiragana": "この くらす も きょう で おわかれ です 。 いつか また みんな で あえる と いい です ね 。",
+            "arti": "Kelas ini juga akan berpisah hari ini. Semoga suatu saat kita semua bisa bertemu lagi ya.",
+            "kunci": ["この", "クラス", "も", "今日", "で", "お別れ", "です", "。", "いつか", "また", "みんな", "で", "会えると", "いいですね", "。"],
+            "soal": ["今日", "クラス", "別れ", "会える", "いい", "お", "です", "いつか", "また", "みんな", "で", "と", "です", "ね", "この", "も", "で"]
+        },
+        {
+            "id": 13,
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "最近ずっと体の調子が悪い。悪い病気でなければいいが･･････。",
+            "hiragana": "さいきん ずっと からだ の ちょうし が わるい 。 わるい びょうき で なければ いい が ･･････ 。",
+            "arti": "Belakangan ini kondisi tubuh saya terus memburuk. Semoga bukan penyakit yang parah...",
+            "kunci": ["最近", "ずっと", "体", "の", "調子", "が", "悪い", "。", "悪い", "病気", "で", "なければ", "いいが", "･･････", "。"],
+            "soal": ["体", "が", "病気", "なけれ", "いい", "調子", "最近", "ずっと", "の", "悪い", "悪い", "ば", "が", "……", "で"]
+        },
+        {
+            "id": 14,
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "あしたは入学試験だ。がんばろう。合格できたらいいなあ。",
+            "hiragana": "あした は にゅうがくしけん だ 。 がんばろう 。 ごうかく できたら いい なあ 。",
+            "arti": "Besok adalah ujian masuk. Ayo berjuang. Semoga bisa lulus ya.",
+            "kunci": ["あした", "は", "入学", "試験", "だ", "。", "がんばろう", "。", "合格", "できたら", "いいなあ", "。"],
+            "soal": ["試験", "合格", "あした", "入学", "だ", "がんばろう", "でき", "たら", "いい", "なあ", "は"]
+        },
+        {
+            "id": 15,
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "疲れているようですね。あしたはゆっくり休むといいですよ。",
+            "hiragana": "つかれている よう です ね 。 あした は ゆっくり やすむ と いい です よ 。",
+            "arti": "Sepertinya Anda lelah. Besok sebaiknya Anda beristirahat dengan santai.",
+            "kunci": ["疲れている", "ようですね", "。", "あした", "は", "ゆっくり", "休むと", "いいですよ", "。"],
+            "soal": ["休む", "疲れ", "よう", "あした", "ゆっくり", "と", "いい", "です", "よ", "て", "いる", "ね"]
+        },
+        {
+            "id": 16,
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "その仕事、気が進まないのなら引き受けなければいいんじゃないですか。",
+            "hiragana": "その しごと 、 き が すすまない の なら ひきうけなければ いい ん じゃ ない です か 。",
+            "arti": "Pekerjaan itu, kalau kamu tidak berminat, bukankah sebaiknya tidak usah diambil saja?",
+            "kunci": ["その", "仕事", "、", "気が進まない", "のなら", "引き受けなければ", "いいんじゃないですか", "。"],
+            "soal": ["引き受け", "気が進ま", "ない", "の", "なら", "その", "仕事", "なけれ", "ば", "いい", "ん", "じゃ", "ない", "です", "か"]
+        },
+        {
+            "id": 17,
+            "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
+            "kanji": "申込書の書き方がわからなければ、事務の人に聞いてみたらいいですよ。",
+            "hiragana": "もうしこみしょ の かきかた が わからなければ 、 じむ の ひと に きいて みたら いい です よ 。",
+            "arti": "Jika tidak tahu cara mengisi formulir pendaftaran, sebaiknya coba tanyakan pada orang tata usaha.",
+            "kunci": ["申込書", "の", "書き方", "が", "わからなければ", "、", "事務", "の", "人", "に", "聞いて", "みたら", "いいですよ", "。"],
+            "soal": ["人", "申込書", "書き方", "わから", "なけれ", "ば", "事務", "の", "に", "聞いて", "み", "たら", "いい", "です", "よ"]
         }
     ]
 
@@ -269,12 +339,13 @@ with col3:
 if st.session_state.status_periksa:
     user_strings = [x["teks"] for x in st.session_state.jawaban_user]
     
-    user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "")
-    kunci_joined = "".join(soal_sekarang["kunci"]).replace(" ", "").replace("、", "").replace("。", "")
+    # Pembersihan string agar tanda baca dan spasi tidak bikin error saat pencocokan otomatis
+    user_joined = "".join(user_strings).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
+    kunci_joined = "".join(soal_sekarang["kunci"]).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
 
-    # Normalisasi otomatis untuk variasi pengecoh kosakata di Bab 9
-    user_joined = user_joined.replace("理想的", "現実的").replace("不必要", "不可欠").replace("高い", "安い").replace("晴れ", "雨").replace("冷たい", "温かい").replace("明るく", "暗く").replace("元気", "病気").replace("少なく", "多く").replace("寒冷な", "温暖な")
-    kunci_joined = kunci_joined.replace("理想的", "現実的").replace("不必要", "不可欠").replace("高い", "安い").replace("晴れ", "雨").replace("冷たい", "温かい").replace("明るく", "暗く").replace("元気", "病気").replace("少なく", "多く").replace("寒冷な", "温暖な")
+    # Normalisasi typo kecil atau perbedaan input tertentu agar fleksibel
+    user_joined = user_joined.replace("帰らせetいただき", "帰らせていただき").replace("帰らせていただき", "帰らせていただき")
+    kunci_joined = kunci_joined.replace("帰らせetいただき", "帰らせていただき").replace("帰らせていただき", "帰らせていただき")
 
     if user_joined == kunci_joined:
         st.success(f"🎉 **正解 (Benar)!** Susunan bunpou kamu sudah sempurna!\n\n"
