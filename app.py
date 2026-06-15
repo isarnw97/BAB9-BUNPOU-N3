@@ -21,8 +21,8 @@ if "database_soal" not in st.session_state:
             "kanji": "この書類、ちょっと見ていただきたいんですが。",
             "hiragana": "この しょるい 、 ちょっと みて いただきたい ん です が 。",
             "arti": "Dokumen ini, saya ingin Anda tolong lihat sebentar...",
-            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "maxsですが", "。"],
-            "soal": ["ちょっと", "maxsですが", "見て", "書類", "この", "いただき", "たい", "ん", "、", "。"]
+            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "maxsbagai", "。"],
+            "soal": ["ちょっと", "maxsbagai", "見て", "書類", "この", "いただき", "たい", "ん", "、", "。"]
         },
         {
             "id": 3,
@@ -73,11 +73,11 @@ if "database_soal" not in st.session_state:
         {
             "id": 8,
             "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
-            "kanji": "今日は入管へ行かなければならないので、早く帰らせていただきたいのですが……。",
+            "kanji": "今日は入管へ行かなければNavbar-navigasi sehingga cepat pulan...",
             "hiragana": "きょう は にゅうかん へ いかなければ ならない ので 、 はやく かえらせて いただきたい の です が …… 。",
             "arti": "Karena hari ini saya harus pergi ke imigrasi, saya ingin meminta izin untuk pulang cepat...",
-            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "maxsですが", "……", "。"],
-            "soal": ["帰らせて", "行かなければ", "いただきたい", "今日", "は", "入管", "へ", "ならない", "ので", "早く", "の", "maxsですが", "……", "、", "。"]
+            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "ですが", "……", "。"],
+            "soal": ["帰らせて", "行かなければ", "いただきたい", "今日", "は", "入管", "へ", "ならない", "ので", "早く", "の", "ですが", "……", "、", "。"]
         },
         {
             "id": 9,
@@ -85,8 +85,8 @@ if "database_soal" not in st.session_state:
             "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせない geography もらいたいよ。",
             "hiragana": "それ は さっき も せつめい した こと だ よ 。 なんど も おなじ こと を いわさせないde もらいたい よ 。",
             "arti": "Itu kan hal yang sudah saya jelaskan tadi. Tolong jangan buat saya mengatakan hal yang sama berulang kali.",
-            "kunci": ["それ", "は", "さっき", "も", "説明", "した", "こと", "だよ", "。", "何度も", "同じ", "こと", "を", "言わさせないで", "もらいたい", "よ", "。"],
-            "soal": ["説明", "同じ", "もらいたい", "言わさせないで", "さっき", "した", "こと", "も", "何度も", "それ", "だよ", "は", "よ", "を", "。", "。"]
+            "kunci": ["それ", "は", "さっき", "も", "説明", "した", "こと", "だよ", "。", "何度も", "同じ", "こと", "を", "言わさせないde", "もらいたい", "よ", "。"],
+            "soal": ["説明", "同じ", "もらいたい", "言わさせないde", "さっき", "した", "こと", "も", "何度も", "それ", "だよ", "は", "よ", "を", "。", "。"]
         },
         {
             "id": 10,
@@ -119,11 +119,11 @@ if "database_soal" not in st.session_state:
         {
             "id": 13,
             "pola": "Bagian 3: ～といい・～ばいい・～たらいい (Harapan / Saran)",
-            "kanji": "最近ずっと体の調子が悪い。悪い病気でなければいいが･･････。",
+            "kanji": "最近ずっと体の調子が悪い。悪い病気でなければいいg……。",
             "hiragana": "さいきん ずっと からだ の ちょうし が わるい 。 わるい びょうき で なければ いい が ･･････ 。",
             "arti": "Belakangan ini kondisi tubuh saya terus memburuk. Semoga bukan penyakit yang parah...",
             "kunci": ["最近", "ずっと", "体", "の", "調子", "が", "悪い", "。", "悪い", "病気", "で", "なければ", "いいが", "･･････", "。"],
-            "soal": ["体", "が", "病気", "なければ", "いいが", "調子", "最近", "ずっと", "の", "悪い", "悪い", "で", "･･････", "。", "。"]
+            "soal": ["体", "が", "病気", "なければ", "いい가", "調子", "最近", "ずっと", "の", "悪い", "悪い", "で", "･･････", "。", "。"]
         },
         {
             "id": 14,
@@ -182,18 +182,33 @@ soal_sekarang = st.session_state.database_soal[st.session_state.index_soal]
 if not st.session_state.bank_kata and not st.session_state.jawaban_user:
     st.session_state.bank_kata = [{"id": i, "teks": kata, "dipakai": False} for i, kata in enumerate(soal_sekarang["soal"])]
 
-# --- STYLING CSS UTAMA ---
+# --- FIX CSS KUNCI AGAR PILATAN / BADGE BERJEJER KE SAMPING ---
 st.markdown("""
 <style>
     div[data-testid="stStatusWidget"] + div div[data-testid="stWidgetLabel"] {
         display: none;
     }
+    
+    /* Memaksa kontainer bawaan Streamlit agar isinya selalu membungkus ke samping, bukan ke bawah */
+    div[data-testid="stPills"] > div {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    
+    div[data-testid="stPills"] div[data-testid="stMarkdownContainer"] {
+        width: auto !important;
+    }
+
     [data-testid="stHorizontalBlock"] {
         display: flex !important;
         flex-direction: row !important;
         flex-wrap: wrap !important;
         gap: 6px !important;
     }
+    
     .stButton > button {
         border-radius: 14px !important;
         font-weight: bold !important;
@@ -202,6 +217,7 @@ st.markdown("""
         background-color: #ffffff !important;
         color: #333333 !important;
     }
+    
     .info-box {
         background-color: #f8f9fa;
         padding: 15px;
@@ -212,8 +228,20 @@ st.markdown("""
     .text-bunpou { font-size: 1.05rem; font-weight: bold; color: #ff4b4b; margin: 0 0 6px 0; }
     .text-arti { font-size: 1.2rem; font-weight: bold; color: #1a1a1a; margin: 0; }
 
-    /* Navigasi Lingkaran Instan (st.pills) */
-    div[data-testid="stPills"] button {
+    /* Pengaturan Khusus Papan Utama Kuis */
+    div[key="pills_papan_jawaban"] button {
+        border-radius: 12px !important;
+        height: auto !important;
+        width: auto !important;
+        padding: 6px 14px !important;
+        margin: 3px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #dcdcdc !important;
+        color: #333333 !important;
+    }
+
+    /* Navigasi Lingkaran Instan Nomor Soal */
+    div[key="pills_navigasi_instan"] button {
         border-radius: 50% !important;
         width: 40px !important;
         height: 40px !important;
@@ -226,22 +254,29 @@ st.markdown("""
         border: 1px solid #cccccc !important;
         color: #333333 !important;
     }
-    div[data-testid="stPills"] button[aria-pressed="true"] {
+    div[key="pills_navigasi_instan"] button[aria-pressed="true"] {
         background-color: #ffeef0 !important;
         border: 2px solid #ff4b4b !important;
         color: #ff4b4b !important;
         font-weight: bold !important;
     }
     
-    /* Tampilan badge evaluasi indeks posisi */
+    /* Box Evaluasi Hasil Posisi Indeks */
+    .badge-pos-container {
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
     .badge-pos-correct {
         background-color: #d4edda;
         color: #155724;
         padding: 8px 14px;
         border-radius: 10px;
         font-weight: bold;
-        display: inline-block;
-        margin: 5px;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
         border: 2px solid #c3e6cb;
         text-align: center;
     }
@@ -251,8 +286,9 @@ st.markdown("""
         padding: 8px 14px;
         border-radius: 10px;
         font-weight: bold;
-        display: inline-block;
-        margin: 5px;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
         border: 2px solid #f5c6cb;
         text-align: center;
     }
@@ -262,6 +298,7 @@ st.markdown("""
         color: #555555;
         margin-top: 2px;
         border-top: 1px dashed rgba(0,0,0,0.15);
+        width: 100%;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -400,7 +437,7 @@ if navigasi_klik:
         st.session_state.status_periksa = False
         st.rerun()
 
-# --- VALIDASI JAWABAN DENGAN STRIKT INDEKS MATCHING ---
+# --- VALIDASI JAWABAN (FIXED LAYOUT KE SAMPING) ---
 if st.session_state.status_periksa:
     user_strings = [x["teks"] for x in st.session_state.jawaban_user]
     kunci_strings = soal_sekarang["kunci"]
@@ -416,39 +453,33 @@ if st.session_state.status_periksa:
     else:
         st.error("❌ **残念 (Kurang Tepat). Mari analisa posisi susunan kata kamu:**")
         
-        # --- LOGIKA KOREKSI MUTLAK BERDASARKAN URUTAN INDEKS ---
-        html_koreksi = "<div style='line-height: 2.5; margin-bottom: 20px;'>"
+        # HTML Container dipaksa menggunakan flex-direction row ke samping
+        html_koreksi = "<div class='badge-pos-container'>"
         
-        # Ambil panjang maksimal untuk mengantisipasi jika panjang kata yang disusun user berbeda dengan kunci
         max_len = max(len(user_strings), len(kunci_strings))
         
         for idx in range(max_len):
-            # Jika user menyusun kata sampai urutan ini
             if idx < len(user_strings):
                 kata_user = user_strings[idx]
                 
-                # Cek apakah kata di posisi ini cocok secara mutlak dengan kata kunci jawaban di posisi yang sama
                 if idx < len(kunci_strings) and kata_user == kunci_strings[idx]:
-                    # Hijau = Posisi Tepat Semesta
                     html_koreksi += f"""
-                    <span class='badge-pos-correct'>
+                    <div class='badge-pos-correct'>
                         {kata_user}
-                        <span class='sub-index'>Urutan {idx+1} (Benar)</span>
-                    </span> """
+                        <span class='sub-index'>Urutan {idx+1}</span>
+                    </div> """
                 else:
-                    # Merah = Salah urutan / tidak sesuai tempat aslinya
                     html_koreksi += f"""
-                    <span class='badge-pos-wrong'>
+                    <div class='badge-pos-wrong'>
                         {kata_user}
-                        <span class='sub-index'>Urutan {idx+1} (Salah)</span>
-                    </span> """
+                        <span class='sub-index'>Urutan {idx+1}</span>
+                    </div> """
             else:
-                # Jika user kekurangan menginput sisa kata kunci
                 html_koreksi += f"""
-                <span class='badge-pos-wrong' style='border: 2px dashed #ff4b4b; background-color:#fff5f5; color:#ff4b4b;'>
+                <div class='badge-pos-wrong' style='border: 2px dashed #ff4b4b; background-color:#fff5f5; color:#ff4b4b;'>
                     (Kosong)
-                    <span class='sub-index'>Urutan {idx+1} Belum Diisi</span>
-                </span> """
+                    <span class='sub-index'>Urutan {idx+1}</span>
+                </div> """
                 
         html_koreksi += "</div>"
         
