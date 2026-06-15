@@ -1,5 +1,4 @@
 import streamlit as st
-import difflib
 
 st.set_page_config(page_title="Susun Kata Jepang - Bab 9", layout="centered")
 
@@ -14,7 +13,7 @@ if "database_soal" not in st.session_state:
             "hiragana": "だれか に じぶん の なやみ を きいて もらいたい と おもう こと が あります 。",
             "arti": "Kadang saya berpikir ingin seseorang mendengarkan keluh kesah saya.",
             "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "ことが", "あります", "。"],
-            "soal": ["思う", "悩み", "と", "聞いて", "ことが", "だれかに", "もらいたい", "あります", "自分の", "。"]
+            "soal": ["思う", "悩み", "と", "聞いて", "ことが", "だれかに", "もらいたい", "あります", "自分の", "を", "。"]
         },
         {
             "id": 2,
@@ -22,8 +21,8 @@ if "database_soal" not in st.session_state:
             "kanji": "この書類、ちょっと見ていただきたいんですが。",
             "hiragana": "この しょるい 、 ちょっと みて いただきたい ん です が 。",
             "arti": "Dokumen ini, saya ingin Anda tolong lihat sebentar...",
-            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "ですが", "。"],
-            "soal": ["ちょっと", "ですが", "見て", "書類", "この", "いただき", "たい", "ん", "、", "。"]
+            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "maxsですが", "。"],
+            "soal": ["ちょっと", "maxsですが", "見て", "書類", "この", "いただき", "たい", "ん", "、", "。"]
         },
         {
             "id": 3,
@@ -77,13 +76,13 @@ if "database_soal" not in st.session_state:
             "kanji": "今日は入管へ行かなければならないので、早く帰らせていただきたいのですが……。",
             "hiragana": "きょう は にゅうかん へ いかなければ ならない ので 、 はやく かえらせて いただきたい の です が …… 。",
             "arti": "Karena hari ini saya harus pergi ke imigrasi, saya ingin meminta izin untuk pulang cepat...",
-            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "ですが", "……", "。"],
-            "soal": ["帰らせて", "行かなければ", "いただきたい", "今日", "は", "入管", "へ", "ならない", "ので", "早く", "の", "ですが", "……", "、", "。"]
+            "kunci": ["今日", "は", "入管", "へ", "行かなければ", "ならない", "ので", "、", "早く", "帰らせて", "いただきたい", "の", "maxsですが", "……", "。"],
+            "soal": ["帰らせて", "行かなければ", "いただきたい", "今日", "は", "入管", "へ", "ならない", "ので", "早く", "の", "maxsですが", "……", "、", "。"]
         },
         {
             "id": 9,
             "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
-            "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせないでもらいたいよ。",
+            "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせない geography もらいたいよ。",
             "hiragana": "それ は さっき も せつめい した こと だ よ 。 なんど も おなじ こと を いわさせないde もらいたい よ 。",
             "arti": "Itu kan hal yang sudah saya jelaskan tadi. Tolong jangan buat saya mengatakan hal yang sama berulang kali.",
             "kunci": ["それ", "は", "さっき", "も", "説明", "した", "こと", "だよ", "。", "何度も", "同じ", "こと", "を", "言わさせないで", "もらいたい", "よ", "。"],
@@ -92,7 +91,7 @@ if "database_soal" not in st.session_state:
         {
             "id": 10,
             "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
-            "kanji": "文化祭 of ポスターはわたしに作らせてほしいなあ。",
+            "kanji": "文化祭のポスターはわたしに作らせてほしいなあ。",
             "hiragana": "ぶんかさい の ぽすたー は わたし に つくらせて ほしい なあ 。",
             "arti": "Poster festival budaya, biarkan aku saja yang membuatnya.",
             "kunci": ["文化祭", "の", "ポスター", "は", "わたし", "に", "作らせて", "ほしい", "なあ", "。"],
@@ -183,7 +182,7 @@ soal_sekarang = st.session_state.database_soal[st.session_state.index_soal]
 if not st.session_state.bank_kata and not st.session_state.jawaban_user:
     st.session_state.bank_kata = [{"id": i, "teks": kata, "dipakai": False} for i, kata in enumerate(soal_sekarang["soal"])]
 
-# --- STYLING CSS LENGKAP ---
+# --- STYLING CSS UTAMA ---
 st.markdown("""
 <style>
     div[data-testid="stStatusWidget"] + div div[data-testid="stWidgetLabel"] {
@@ -213,7 +212,7 @@ st.markdown("""
     .text-bunpou { font-size: 1.05rem; font-weight: bold; color: #ff4b4b; margin: 0 0 6px 0; }
     .text-arti { font-size: 1.2rem; font-weight: bold; color: #1a1a1a; margin: 0; }
 
-    /* Customisasi Navigasi Lingkaran Instan (st.pills) */
+    /* Navigasi Lingkaran Instan (st.pills) */
     div[data-testid="stPills"] button {
         border-radius: 50% !important;
         width: 40px !important;
@@ -234,26 +233,35 @@ st.markdown("""
         font-weight: bold !important;
     }
     
-    /* Style untuk Badge Koreksi Salah-Benar */
-    .badge-correct {
+    /* Tampilan badge evaluasi indeks posisi */
+    .badge-pos-correct {
         background-color: #d4edda;
         color: #155724;
-        padding: 6px 12px;
-        border-radius: 8px;
+        padding: 8px 14px;
+        border-radius: 10px;
         font-weight: bold;
         display: inline-block;
-        margin: 4px;
-        border: 1px solid #c3e6cb;
+        margin: 5px;
+        border: 2px solid #c3e6cb;
+        text-align: center;
     }
-    .badge-wrong {
+    .badge-pos-wrong {
         background-color: #f8d7da;
         color: #721c24;
-        padding: 6px 12px;
-        border-radius: 8px;
+        padding: 8px 14px;
+        border-radius: 10px;
         font-weight: bold;
         display: inline-block;
-        margin: 4px;
-        border: 1px solid #f5c6cb;
+        margin: 5px;
+        border: 2px solid #f5c6cb;
+        text-align: center;
+    }
+    .sub-index {
+        font-size: 0.75rem;
+        display: block;
+        color: #555555;
+        margin-top: 2px;
+        border-top: 1px dashed rgba(0,0,0,0.15);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -346,7 +354,7 @@ render_kuis_lengkap()
 
 st.markdown("<br><hr>", unsafe_allow_html=True)
 
-# --- TOMBOL NAVIGASI UTAMA (RESET, PERIKSA, LANJUT) ---
+# --- TOMBOL NAVIGASI UTAMA ---
 col1, col2, col3 = st.columns([1, 1.2, 1])
 with col1:
     if st.button("RESET 🔄", use_container_width=True):
@@ -370,9 +378,8 @@ with col3:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
-# --- 🎯 FITUR LOMPAT INSTAN KE NOMOR SOAL (VERSI FIXED TANPA PARAMETER INDEX) ---
+# --- 🎯 FITUR LOMPAT INSTAN KE NOMOR SOAL ---
 st.markdown("<div style='text-align: center; font-weight: bold; font-size: 1.05rem;'>🎯 Lompat Instan ke Nomor Soal:</div>", unsafe_allow_html=True)
-
 opsi_pills_navigasi = [str(i+1) for i in range(len(st.session_state.database_soal))]
 
 navigasi_klik = st.pills(
@@ -393,7 +400,7 @@ if navigasi_klik:
         st.session_state.status_periksa = False
         st.rerun()
 
-# --- VALIDASI JAWABAN & ANALISIS LETAK KESALAHAN ---
+# --- VALIDASI JAWABAN DENGAN STRIKT INDEKS MATCHING ---
 if st.session_state.status_periksa:
     user_strings = [x["teks"] for x in st.session_state.jawaban_user]
     kunci_strings = soal_sekarang["kunci"]
@@ -402,36 +409,53 @@ if st.session_state.status_periksa:
     kunci_joined = "".join(kunci_strings).replace(" ", "").replace("、", "").replace("。", "").replace("?", "").replace("？", "").replace("……", "").replace("…", "").replace("･･････", "")
 
     if user_joined == kunci_joined:
-        st.success(f"🎉 **正解 (Benar)!** Susunan bunpou kamu sudah sempurna!\n\n"
+        st.success(f"🎉 **正解 (Benar)!** Susunan posisi kata kamu sudah sempurna!\n\n"
                    f"**Kanji:**\n{soal_sekarang['kanji']}\n\n"
                    f"**Hiragana:**\n{soal_sekarang['hiragana']}\n\n"
                    f"**Arti:**\n{soal_sekarang['arti']}")
     else:
-        st.error("❌ **残念 (Kurang Tepat). Periksa letak kesalahanmu di bawah ini:**")
+        st.error("❌ **残念 (Kurang Tepat). Mari analisa posisi susunan kata kamu:**")
         
-        # --- ALGORITMA DETEKSI SALAH PER KATA ---
-        html_koreksi = "<div style='line-height: 2.2; margin-bottom: 15px;'>"
+        # --- LOGIKA KOREKSI MUTLAK BERDASARKAN URUTAN INDEKS ---
+        html_koreksi = "<div style='line-height: 2.5; margin-bottom: 20px;'>"
         
-        # Bandingkan array kata input user dengan kunci jawaban menggunakan SequenceMatcher
-        matcher = difflib.SequenceMatcher(None, user_strings, kunci_strings)
+        # Ambil panjang maksimal untuk mengantisipasi jika panjang kata yang disusun user berbeda dengan kunci
+        max_len = max(len(user_strings), len(kunci_strings))
         
-        for tag, i1, i2, j1, j2 in matcher.get_opcodes():
-            if tag == 'equal':
-                # Bagian kata yang letaknya sudah benar (Hijau)
-                for k in range(i1, i2):
-                    html_koreksi += f"<span class='badge-correct'>{user_strings[k]} ✓</span> "
+        for idx in range(max_len):
+            # Jika user menyusun kata sampai urutan ini
+            if idx < len(user_strings):
+                kata_user = user_strings[idx]
+                
+                # Cek apakah kata di posisi ini cocok secara mutlak dengan kata kunci jawaban di posisi yang sama
+                if idx < len(kunci_strings) and kata_user == kunci_strings[idx]:
+                    # Hijau = Posisi Tepat Semesta
+                    html_koreksi += f"""
+                    <span class='badge-pos-correct'>
+                        {kata_user}
+                        <span class='sub-index'>Urutan {idx+1} (Benar)</span>
+                    </span> """
+                else:
+                    # Merah = Salah urutan / tidak sesuai tempat aslinya
+                    html_koreksi += f"""
+                    <span class='badge-pos-wrong'>
+                        {kata_user}
+                        <span class='sub-index'>Urutan {idx+1} (Salah)</span>
+                    </span> """
             else:
-                # Bagian kata yang letaknya salah posisinya (Merah)
-                for k in range(i1, i2):
-                    html_koreksi += f"<span class='badge-wrong'>{user_strings[k]} ✗</span> "
-                    
+                # Jika user kekurangan menginput sisa kata kunci
+                html_koreksi += f"""
+                <span class='badge-pos-wrong' style='border: 2px dashed #ff4b4b; background-color:#fff5f5; color:#ff4b4b;'>
+                    (Kosong)
+                    <span class='sub-index'>Urutan {idx+1} Belum Diisi</span>
+                </span> """
+                
         html_koreksi += "</div>"
         
-        # Tampilkan visualisasi letak salahnya ke user
-        st.markdown("**Analisis Papan Jawabanmu:**", unsafe_allow_html=True)
+        st.markdown("**Analisis Presisi Posisi Kata Kamu:**", unsafe_allow_html=True)
         st.markdown(html_koreksi, unsafe_allow_html=True)
         
-        st.markdown(f"**Susunan yang benar:**\n\n`{' '.join(soal_sekarang['kunci'])}`\n\n"
+        st.markdown(f"**💡 Panduan Urutan yang Benar:**\n\n`{' ➔ '.join(soal_sekarang['kunci'])}`\n\n"
                     f"**Kanji:**\n{soal_sekarang['kanji']}\n\n"
                     f"**Hiragana:**\n{soal_sekarang['hiragana']}\n\n"
                     f"**Arti:**\n{soal_sekarang['arti']}")
