@@ -12,8 +12,8 @@ if "database_soal" not in st.session_state:
             "kanji": "だれかに自分の悩みを聞いてもらいたいと思うことがあります。",
             "hiragana": "だれか に じぶん の なやみ を きいて もらいたい と おもう こと が あります 。",
             "arti": "Kadang saya berpikir ingin seseorang mendengarkan keluh kesah saya.",
-            "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "maxが", "あります", "。"],
-            "soal": ["お思う", "悩み", "と", "聞いて", "が", "だれか", "もらい", "あります", "じぶん", "に", "たい", "ほしい", "こと", "の"]
+            "kunci": ["だれかに", "自分の", "悩み", "を", "聞いて", "もらいたい", "と", "思う", "ことが", "あります", "。"],
+            "soal": ["おもう", "悩み", "と", "聞いて", "が", "だれか", "もらいたい", "あります", "じぶん", "に", "たい", "ほしい", "こと", "の"]
         },
         {
             "id": 2,
@@ -21,7 +21,7 @@ if "database_soal" not in st.session_state:
             "kanji": "この書類、ちょっと見ていただきたいんですが。",
             "hiragana": "この しょるい 、 ちょっと みて いただきたい ん です が 。",
             "arti": "Dokumen ini, saya ingin Anda tolong lihat sebentar...",
-            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "ですが", "。"],
+            "kunci": ["この", "書類", "、", "ちょっと", "見て", "いただきたい", "ん", "maxですが", "。"],
             "soal": ["ちょっと", "が", "見て", "書類", "この", "です", "いただき", "たい", "ん"]
         },
         {
@@ -83,7 +83,7 @@ if "database_soal" not in st.session_state:
             "id": 9,
             "pola": "Bagian 2: ～(さ)せてもらいたい・～(さ)せていただきたい・～(さ)せてほしい (Mengharap diizinkan melakukan sesuatu)",
             "kanji": "それはさっきも説明したことだよ。何度も同じことを言わさせないでもらいたいよ。",
-            "hiragana": "それ は さっき も せつめい した こと だ よ 。 なんど も おなじ こと を いわさせないで もらいたい よ 。",
+            "hiragana": "それ は さっき も せつめい した こと だ よ 。 なんど も おなじ こと を いわさせないde もらいたい よ 。",
             "arti": "Itu kan hal yang sudah saya jelaskan tadi. Tolong jangan buat saya mengatakan hal yang sama berulang kali.",
             "kunci": ["それ", "は", "さっき", "も", "説明", "した", "こと", "だよ", "。", "何度も", "同じ", "こと", "を", "言わさせないで", "もらいたい", "よ", "。"],
             "soal": ["説明", "同じ", "もらい", "言わ", "さっき", "し", "と", "こと", "も", "何度", "それ", "だよ", "は", "も", "た", "ない", "で", "たい", "よ", "を"]
@@ -113,7 +113,7 @@ if "database_soal" not in st.session_state:
             "kanji": "このクラスも今日でお別れです。いつかまたみんなで会えるといいですね。",
             "hiragana": "この くらす も きょう で おわかれ です 。 いつか また みんな で あえる と いい です ね 。",
             "arti": "Kelas ini juga akan berpisah hari ini. Semoga suatu saat kita semua bisa bertemu lagi ya.",
-            "kunci": ["この", "クラス", "も", "今日", "引で", "お別れ", "です", "。", "いつか", "また", "みんな", "で", "会えると", "いいですね", "。"],
+            "kunci": ["この", "クラス", "も", "今日", "で", "お別れ", "です", "。", "いつか", "また", "みんな", "で", "会えると", "いいですね", "。"],
             "soal": ["今日", "クラス", "別れ", "会える", "いい", "お", "です", "いつか", "また", "みんな", "で", "と", "です", "ね", "この", "も", "で"]
         },
         {
@@ -132,7 +132,7 @@ if "database_soal" not in st.session_state:
             "hiragana": "あした は にゅうがくしけん だ 。 がんばろう 。 ごうかく できたら いい なあ 。",
             "arti": "Besok adalah ujian masuk. Ayo berjuang. Semoga bisa lulus ya.",
             "kunci": ["あした", "は", "入学", "試験", "だ", "。", "がんばろう", "。", "合格", "できたら", "いいなあ", "。"],
-            "soal": ["試験", "合格", "あした", "入学", "だ", "gambaろう", "でき", "たら", "いい", "なあ", "は"]
+            "soal": ["試験", "合格", "あした", "入学", "だ", "がんばろう", "でき", "たら", "いい", "なあ", "は"]
         },
         {
             "id": 15,
@@ -163,31 +163,9 @@ if "database_soal" not in st.session_state:
         }
     ]
 
-# --- INISIALISASI STATE INDEX SOAL ---
+# --- INISIALISASI STATE UTAMA ---
 if "index_soal" not in st.session_state:
     st.session_state.index_soal = 0
-
-# --- FITUR LOMPAT NOMOR SOAL (DROP-DOWN) ---
-pilihan_nomor = [f"Soal {i+1}" for i in range(len(st.session_state.database_soal))]
-pilihan_terpilih = st.selectbox(
-    "🧭 Lompat ke Soal Nomor:",
-    options=pilihan_nomor,
-    index=st.session_state.index_soal,
-    key="selectbox_navigasi"
-)
-
-idx_terpilih = pilihan_nomor.index(pilihan_terpilih)
-
-# Jika user memilih nomor yang berbeda di drop-down, ganti index dan reset state kuis
-if idx_terpilih != st.session_state.index_soal:
-    st.session_state.index_soal = idx_terpilih
-    st.session_state.jawaban_user = []
-    st.session_state.bank_kata = []
-    st.session_state.idx_kata_dipilih = None
-    st.session_state.status_periksa = False
-    st.rerun()
-
-# --- INISIALISASI STATE GAME LAINNYA ---
 if "jawaban_user" not in st.session_state:
     st.session_state.jawaban_user = []
 if "bank_kata" not in st.session_state:
@@ -204,7 +182,7 @@ soal_sekarang = st.session_state.database_soal[st.session_state.index_soal]
 if not st.session_state.bank_kata and not st.session_state.jawaban_user:
     st.session_state.bank_kata = [{"id": i, "teks": kata, "dipakai": False} for i, kata in enumerate(soal_sekarang["soal"])]
 
-# --- STYLING CSS ---
+# --- STYLING CSS PERSIS SEPERTI GAMBAR (Pills Berbentuk Lingkaran Merah/Abu-abu) ---
 st.markdown("""
 <style>
     div[data-testid="stStatusWidget"] + div div[data-testid="stWidgetLabel"] {
@@ -216,34 +194,46 @@ st.markdown("""
         flex-wrap: wrap !important;
         gap: 6px !important;
     }
-    [data-testid="stHorizontalBlock"] > div {
-        flex: 1 1 22% !important; 
-        min-width: 70px !important; 
+    /* Tombol Pilihan Kata di Atas */
+    .stButton > button {
+        border-radius: 14px !important;
+        font-weight: bold !important;
+        padding: 8px 12px !important;
+        border: 1px solid #dcdcdc !important;
+        background-color: #ffffff !important;
+        color: #333333 !important;
     }
+    /* Kotak Informasi Atas */
     .info-box {
-        background-color: #e8f4fd;
+        background-color: #f8f9fa;
         padding: 15px;
         border-radius: 12px;
-        border-left: 5px solid #1fa2ff;
+        border-left: 5px solid #ff4b4b;
         margin-bottom: 20px;
     }
-    .text-bunpou { font-size: 1.05rem; font-weight: bold; color: #1fa2ff; margin: 0 0 6px 0; }
+    .text-bunpou { font-size: 1.05rem; font-weight: bold; color: #ff4b4b; margin: 0 0 6px 0; }
     .text-arti { font-size: 1.2rem; font-weight: bold; color: #1a1a1a; margin: 0; }
-    
-    div.stButton > button {
-        border-radius: 12px !important;
-        font-weight: bold !important;
-        padding: 6px 10px !important;
+
+    /* Customisasi Navigasi Lingkaran Instan (st.pills) */
+    div[data-testid="stPills"] button {
+        border-radius: 50% !important;
+        width: 40px !important;
+        height: 40px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0 !important;
+        min-width: 40px !important;
+        background-color: #ffffff !important;
+        border: 1px solid #cccccc !important;
+        color: #333333 !important;
     }
-    .swap-indicator {
-        background-color: #e6fffa;
-        border: 1px dashed #319795;
-        padding: 10px;
-        border-radius: 8px;
-        color: #234e52;
-        font-weight: bold;
-        margin-bottom: 10px;
-        font-size: 0.9rem;
+    /* Ketika Pills Aktif Terpilih (Sesuai Gambar Bulatan Merah Merona) */
+    div[data-testid="stPills"] button[aria-pressed="true"] {
+        background-color: #ffeef0 !important;
+        border: 2px solid #ff4b4b !important;
+        color: #ff4b4b !important;
+        font-weight: bold !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -275,9 +265,9 @@ def render_kuis_lengkap():
         st.session_state.mode_tukar = True
         if st.session_state.idx_kata_dipilih is not None:
             kata_terpilih = st.session_state.jawaban_user[st.session_state.idx_kata_dipilih]["teks"]
-            st.markdown(f'<div class="swap-indicator">📍 Kata [{kata_terpilih}] terpilih. Sekarang klik kata tujuan untuk bertukar posisi!</div>', unsafe_allow_html=True)
+            st.markdown(f'<div style="background-color:#fffaf0; border:1px dashed #dd6b20; padding:10px; border-radius:8px; color:#7b341e; font-weight:bold; margin-bottom:10px;">📍 Kata [{kata_terpilih}] terpilih. Klik kata tujuan!</div>', unsafe_allow_html=True)
         else:
-            st.markdown('<div class="swap-indicator">💡 Klik kata pertama yang ingin ditukar posisinya...</div>', unsafe_allow_html=True)
+            st.markdown('<div style="background-color:#fffaf0; border:1px dashed #dd6b20; padding:10px; border-radius:8px; color:#7b341e; font-weight:bold; margin-bottom:10px;">💡 Klik kata pertama yang ingin ditukar posisinya...</div>', unsafe_allow_html=True)
     else:
         st.session_state.mode_tukar = False
         st.session_state.idx_kata_dipilih = None
@@ -293,6 +283,7 @@ def render_kuis_lengkap():
             options=opsi_papan,
             format_func=lambda x: format_papan[x],
             selection_mode="single",
+            key="pills_papan_jawaban",
             label_visibility="collapsed"
         )
         st.markdown("<div style='border-bottom: 2px solid #e5e5e5; margin-top: -10px; margin-bottom: 25px;'></div>", unsafe_allow_html=True)
@@ -335,30 +326,50 @@ render_kuis_lengkap()
 
 st.markdown("<br><hr>", unsafe_allow_html=True)
 
-# --- TOMBOL NAVIGASI UTAMA ---
-col1, col2, col3, col4 = st.columns(4)
+# --- TOMBOL NAVIGASI UTAMA (RESET, PERIKSA, LANJUT) ---
+col1, col2, col3 = st.columns([1, 1.2, 1])
 with col1:
-    if st.button("⬅️ Sblmnya", use_container_width=True):
-        st.session_state.index_soal = (st.session_state.index_soal - 1) % len(st.session_state.database_soal)
-        st.session_state.jawaban_user = []
-        st.session_state.bank_kata = []
-        st.session_state.idx_kata_dipilih = None
-        st.session_state.status_periksa = False
-        st.rerun()
-with col2:
-    if st.button("Reset 🔄", use_container_width=True):
+    if st.button("RESET 🔄", use_container_width=True):
         st.session_state.jawaban_user = []
         for kata in st.session_state.bank_kata:
             kata["dipakai"] = False
         st.session_state.idx_kata_dipilih = None
         st.session_state.status_periksa = False
         st.rerun()
-with col3:
+with col2:
     if st.button("PERIKSA ✅", type="primary", use_container_width=True):
         st.session_state.status_periksa = True
-with col4:
-    if st.button("Lanjut ➡️", use_container_width=True):
+with col3:
+    if st.button("LANJUT ➡️", use_container_width=True):
         st.session_state.index_soal = (st.session_state.index_soal + 1) % len(st.session_state.database_soal)
+        st.session_state.jawaban_user = []
+        st.session_state.bank_kata = []
+        st.session_state.idx_kata_dipilih = None
+        st.session_state.status_periksa = False
+        st.rerun()
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# --- 🎯 FITUR LOMPAT INSTAN KE NOMOR SOAL (PERSIS SEPERTI GAMBAR 1000991486.jpg) ---
+st.markdown("<div style='text-align: center; font-weight: bold; font-size: 1.05rem;'>🎯 Lompat Instan ke Nomor Soal:</div>", unsafe_allow_html=True)
+
+# Generate list string angka ["1", "2", "3", ..., "17"]
+opsi_pills_navigasi = [str(i+1) for i in range(len(st.session_state.database_soal))]
+
+navigasi_klik = st.pills(
+    label="Navigasi Instan Nomor Soal",
+    options=opsi_pills_navigasi,
+    index=st.session_state.index_soal,
+    selection_mode="single",
+    label_visibility="collapsed",
+    key="pills_navigasi_instan"
+)
+
+# Jika nomor bulatan di klik, pindah soal secara realtime
+if navigasi_klik:
+    idx_pindah = int(navigasi_klik) - 1
+    if idx_pindah != st.session_state.index_soal:
+        st.session_state.index_soal = idx_pindah
         st.session_state.jawaban_user = []
         st.session_state.bank_kata = []
         st.session_state.idx_kata_dipilih = None
